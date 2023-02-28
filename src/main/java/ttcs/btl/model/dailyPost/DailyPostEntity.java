@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import ttcs.btl.model.client.ClientEntity;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name="dailyPosts")
+@Table(name = "daily_posts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,28 +23,31 @@ public class DailyPostEntity {
     @Column(name = "img")
     private String img;
 
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name="des")
+    @Column(name = "des")
     private String des;
 
-    @Column(name="poster_name", nullable = false)
+    @Column(name = "poster_name", nullable = false, columnDefinition = "nvarchar(255) default ''")
     private String posterName;
 
-    @OneToMany(mappedBy = "dailyPostEntity", cascade = CascadeType.ALL)
-    private Set<Likes> likes;
-
-    @OneToMany(mappedBy = "dailyPostEntity", cascade = CascadeType.ALL)
-    private Set<Favorites> favorites;
-
     @ManyToOne
-    @JoinColumn(name = "client_id",nullable = false)
+    @JoinColumn(name = "client_entity_id")
     private ClientEntity clientEntity;
+    @Column(name = "likes")
+    @ElementCollection
+    @JoinTable(name = "daily_post_entity_likes", joinColumns = @JoinColumn(name = "daily_post_entity_id"))
+    List<String> likes;
 
-    @Column(name="created_at")
+    @ElementCollection
+    @Column(name = "favorites")
+    @JoinTable(name = "daily_post_entity_favorites", joinColumns = @JoinColumn(name = "daily_post_entity_id"))
+    List<String> favorites;
+
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP default now()")
     private Date createdAt;
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP default now()")
     private Date updatedAt;
 }

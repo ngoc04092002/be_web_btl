@@ -14,7 +14,7 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="username", nullable = false)
+    @Column(name="username", nullable = false, columnDefinition = "nvarchar(255)")
     private String username;
 
     @Column(name="email", nullable = false)
@@ -32,7 +32,7 @@ public class ClientEntity {
     @Column(name="password")
     private String password;
 
-    @Column(name="role")
+    @Column(name="role", nullable = false, columnDefinition = "varchar(225) default 'user'")
     private String role;
 
     @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.ALL)
