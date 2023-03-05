@@ -1,0 +1,9 @@
+{
+  "username": "test",
+  "email":"test@gmail.com",
+  "address":"test",
+  "gender": "male",
+  "sdt":"0123456789",
+  "password":"123456789",
+  "role": "user"
+}

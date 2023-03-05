@@ -2,9 +2,12 @@ package ttcs.btl.model.client;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import ttcs.btl.model.dailyPost.DailyPostEntity;
+import ttcs.btl.model.QAEntity.QAEntity;
+import ttcs.btl.model.comments.CommentsEntity;
+import ttcs.btl.model.news.NewsEntity;
 
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="clients")
@@ -26,7 +29,7 @@ public class ClientEntity {
     @Column(name="gender", nullable = false)
     private String gender;
 
-    @Column(name="sdt")
+    @Column(name="sdt" , nullable = false, columnDefinition = "varchar(225) default ''")
     private String sdt;
 
     @Column(name="password")
@@ -35,6 +38,20 @@ public class ClientEntity {
     @Column(name="role", nullable = false, columnDefinition = "varchar(225) default 'user'")
     private String role;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
     @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.ALL)
-    private Set<DailyPostEntity> dailyPostEntitySet;
+    private List<NewsEntity> newsEntityList;
+
+    @OneToMany(mappedBy = "clientEntityQa", cascade = CascadeType.ALL)
+    private List<QAEntity> qaEntities;
+
+//    @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
+//    private List<CommentsEntity> commentsEntities;
 }
