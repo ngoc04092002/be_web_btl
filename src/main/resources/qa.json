@@ -1,0 +1,13 @@
+{
+  "img": "https://media.timeout.com/images/105241469/image.jpg",
+  "content": "name",
+  "clientEntityQa":{
+    "username": "test1",
+    "email":"test1@gmail.com",
+    "address":"test1",
+    "gender": "female",
+    "sdt":"0123456789",
+    "password":"123456789",
+    "role": "user"
+  }
+}
