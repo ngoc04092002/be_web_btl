@@ -17,6 +17,11 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  data:
+    mongodb:
+      database: test
+      uri: mongodb+srv://ngocbeo3387:gjuBiVN7ge7tgWVj@btlttcs.iscuvsj.mongodb.net
+
 
 app:
   frontEndDomain: http://localhost:3000
