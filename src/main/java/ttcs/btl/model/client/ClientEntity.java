@@ -52,6 +52,6 @@ public class ClientEntity {
     @OneToMany(mappedBy = "clientEntityQa", cascade = CascadeType.ALL)
     private List<QAEntity> qaEntities;
 
-//    @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
-//    private List<CommentsEntity> commentsEntities;
+    @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
+    private List<CommentsEntity> commentsEntities;
 }

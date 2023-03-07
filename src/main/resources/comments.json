@@ -2,7 +2,7 @@
   "content": "test comment",
   "qaEntityComment": {
     "img": "https://media.timeout.com/images/105241469/image.jpg",
-    "des": "name",
+    "content": "name",
     "clientEntityQa":{
       "username": "test1",
       "email":"test1@gmail.com",
@@ -12,5 +12,14 @@
       "password":"123456789",
       "role": "user"
     }
+  },
+  "clientEntityComment":{
+    "username": "test1Comment",
+    "email":"test1Comment@gmail.com",
+    "address":"test1Comment",
+    "gender": "female",
+    "sdt":"0123456789",
+    "password":"123456789",
+    "role": "user"
   }
 }

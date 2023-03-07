@@ -39,10 +39,10 @@ public class CommentsEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_comments_id", referencedColumnName = "id")
-    private QAEntity qaEntity;
+    private QAEntity qaEntityComment;
 
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "fk_client_comment_id", referencedColumnName = "id")
-//    private ClientEntity clientEntityComment;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_client_comment_id", referencedColumnName = "id")
+    private ClientEntity clientEntityComment;
 }
