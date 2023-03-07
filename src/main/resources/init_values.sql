@@ -9,13 +9,6 @@ values ('https://www.seatemperatu.re/site/images/illustration/vietnam_770.jpg', 
 insert into news (img, title, des, poster_name, client_entity_id)
 values ('https://media.timeout.com/images/105241469/image.jpg', 'halong', 'dep qua', 'name', 2);
 
--- LIKES
-insert into news_entity_likes (news_entity_id, likes)
-values (1, 1);
-insert into news_entity_likes (news_entity_id, likes)
-values (2, 2);
-
-
 # CLIENTS
 insert into clients (username, email, address, password, sdt, gender, role)
 values ('test', 'test@email.com', 'test', '12345678', '0123456789', 'nam', 'user');

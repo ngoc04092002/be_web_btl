@@ -17,7 +17,7 @@ public class ClientController {
 
     private final IClientService iClientService;
 
-    @GetMapping("getAll-clients-post")
+    @GetMapping("getAll-clients")
     public List<ClientResponse> getAllNews(){
         List<ClientEntity> allCLients = iClientService.getAllCLients();
 
