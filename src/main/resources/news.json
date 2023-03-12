@@ -4,6 +4,7 @@
   "des": "name",
   "posterName": "hi",
   "clientEntity":{
+    "avatar": "",
     "username": "test1",
     "email":"test1@gmail.com",
     "address":"test1",

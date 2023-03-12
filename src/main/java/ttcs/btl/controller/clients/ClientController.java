@@ -3,9 +3,7 @@ package ttcs.btl.controller.clients;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.clients.ClientResponse;
-import ttcs.btl.dto.news.NewsResponse;
 import ttcs.btl.model.client.ClientEntity;
-import ttcs.btl.model.news.NewsEntity;
 import ttcs.btl.service.clients.IClientService;
 
 import java.util.List;

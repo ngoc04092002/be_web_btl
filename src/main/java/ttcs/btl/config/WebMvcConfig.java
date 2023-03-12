@@ -17,6 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addMapping("/api/v1/**")
                 .allowedOrigins(environmentConfig.getCorsEndPoint().toArray(String[]::new))
                 .allowCredentials(true)
+                .allowedHeaders("*")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE");
     }
 }

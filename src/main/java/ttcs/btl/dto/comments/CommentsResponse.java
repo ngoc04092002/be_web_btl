@@ -8,7 +8,7 @@ public record CommentsResponse(Long id, String content, LocalDateTime createdAt,
                                Long fk_client_comment_id) {
     public CommentsResponse(CommentsEntity commentsEntity) {
         this(commentsEntity.getId(), commentsEntity.getContent(), commentsEntity.getCreatedAt(),
-             commentsEntity.getClientEntityComment()
+             commentsEntity.getQaEntityComment()
                      .getId(), commentsEntity.getClientEntityComment()
                      .getId());
     }

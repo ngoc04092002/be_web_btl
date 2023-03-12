@@ -2,6 +2,7 @@
   "img": "https://media.timeout.com/images/105241469/image.jpg",
   "content": "name",
   "clientEntityQa":{
+    "avatar": "",
     "username": "test1",
     "email":"test1@gmail.com",
     "address":"test1",

@@ -2,6 +2,8 @@ package ttcs.btl.model.client;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import ttcs.btl.dto.auth.UserResponse;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.model.news.NewsEntity;
@@ -12,10 +14,23 @@ import java.util.List;
 @Entity
 @Table(name="clients")
 @Data
+@RequiredArgsConstructor
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public ClientEntity(UserResponse userResponse){
+        this.username=userResponse.username();
+        this.email=userResponse.email();
+        this.address=userResponse.address();
+        this.gender=userResponse.gender();
+        this.password=userResponse.password();
+        this.sdt="";
+        this.avatar="";
+        this.role="user";
+        this.createdAt=LocalDateTime.now();
+    }
 
     @Column(name="username", nullable = false, columnDefinition = "nvarchar(255)")
     private String username;
@@ -29,6 +44,8 @@ public class ClientEntity {
     @Column(name="gender", nullable = false)
     private String gender;
 
+    @Column(name="avatar", nullable = false, columnDefinition = "varchar(225) default ''")
+    private String avatar;
     @Column(name="sdt" , nullable = false, columnDefinition = "varchar(225) default ''")
     private String sdt;
 

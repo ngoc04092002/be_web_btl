@@ -4,7 +4,7 @@ spring:
   datasource:
     username: ${env.MYSQL_USER}
     password: ${env.MYSQL_PASSWORD}
-    url: jdbc:mysql://localhost:3306/db_sql
+    url: jdbc:mysql://localhost:${env.MYSQL_PORT}/db_sql
 
 
   #The SQL dialect makes Hibernate generate better SQL for the chosen database
@@ -26,7 +26,11 @@ spring:
 app:
   frontEndDomain: http://localhost:3000
   corsEndPoint:
-    - http://localhost:3000
-    - http://localhost:3002
+    - http://localhost:8080
+    - http://localhost:8000
     - http://localhost:3001
-  collectUserChatPeriod: 180
+    - http://localhost:3000
+  auth:
+    tokenCookieName: btl_ttcs
+    tokenExpirationMsec: 604800000
+    tokenSecret: key_privateakshdjasd129p8u91p8j$@
