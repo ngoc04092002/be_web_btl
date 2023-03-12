@@ -8,4 +8,5 @@ import java.util.List;
 public interface INewsService {
     List<NewsEntity> getNews();
     NewsResponse saveNews(NewsEntity newsEntity);
+
 }

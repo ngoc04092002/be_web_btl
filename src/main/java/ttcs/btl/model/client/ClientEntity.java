@@ -3,6 +3,7 @@ package ttcs.btl.model.client;
 import jakarta.persistence.*;
 import lombok.Data;
 import ttcs.btl.model.QAEntity.QAEntity;
+import ttcs.btl.model.bills.BillEntity;
 import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.model.news.NewsEntity;
 
@@ -54,4 +55,10 @@ public class ClientEntity {
 
     @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
+
+    @OneToMany(mappedBy = "clientEntityBill", cascade = CascadeType.ALL)
+    private List<BillEntity> billEntities;
+
+//    @OneToMany(mappedBy = "clientEntityPostRoomInfo", cascade = CascadeType.ALL)
+//    private List<BillEntity> postRoomInfoEntities;
 }

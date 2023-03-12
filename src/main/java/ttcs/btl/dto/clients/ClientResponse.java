@@ -10,7 +10,12 @@ import java.util.List;
 public record ClientResponse(Long id, String username, String email, String address, String gender, String sdt,
                              String role) {
     public ClientResponse(ClientEntity clientEntity) {
-        this(clientEntity.getId(),clientEntity.getUsername(), clientEntity.getEmail(), clientEntity.getAddress(),
-             clientEntity.getGender(), clientEntity.getSdt(), clientEntity.getRole());
+        this(clientEntity.getId(),
+                clientEntity.getUsername(),
+                clientEntity.getEmail(),
+                clientEntity.getAddress(),
+                clientEntity.getGender(),
+                clientEntity.getSdt(),
+                clientEntity.getRole());
     }
 }

@@ -4,7 +4,7 @@ spring:
   datasource:
     username: ${env.MYSQL_USER}
     password: ${env.MYSQL_PASSWORD}
-    url: jdbc:mysql://localhost:3306/db_sql
+    url: jdbc:mysql://localhost:3309/db_sql
 
 
   #The SQL dialect makes Hibernate generate better SQL for the chosen database

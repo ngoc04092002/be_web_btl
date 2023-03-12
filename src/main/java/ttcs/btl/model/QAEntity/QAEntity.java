@@ -33,7 +33,7 @@ public class QAEntity {
     @Column(name = "likes")
     List<LikesQAEntity> likes;
 
-    @OneToMany(mappedBy = "qaEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "qaEntityComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
     @ManyToOne(cascade = CascadeType.ALL)
