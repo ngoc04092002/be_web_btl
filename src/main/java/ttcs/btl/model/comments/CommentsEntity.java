@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ttcs.btl.model.QAEntity.LikesQAEntity;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.model.client.ClientEntity;
 
