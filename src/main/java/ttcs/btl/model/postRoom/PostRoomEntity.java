@@ -39,11 +39,11 @@ public class PostRoomEntity {
     @Column(name = "sale", columnDefinition = "FLOAT(5,2)")
     private Double sale;
 
-    @Column(name = "length")
-    private String length;
+    @Column(name = "acreage")
+    private String acreage;
 
-    @Column(name = "width")
-    private String width;
+    @Column(name = "limit_number_people")
+    private Integer limitNumberPeople;
 
     @Column(name = "des")
     private String des;
