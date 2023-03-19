@@ -1,5 +1,8 @@
 package ttcs.btl.controller.auth;
 
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.auth.AuthRequest;
 import ttcs.btl.dto.auth.AuthResponse;
 import ttcs.btl.dto.auth.UserResponse;
@@ -22,7 +22,7 @@ import ttcs.btl.repository.error.ResourceNotFoundException;
 import ttcs.btl.service.auth.IAuthService;
 import ttcs.btl.service.auth.TokenProvider;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 @RestController
 @Validated
@@ -37,6 +37,19 @@ public class AuthController {
 
     @Value("${app.auth.tokenCookieName}")
     public String tokenCookieName;
+
+
+    @GetMapping("get-user-info")
+    public AuthResponse getUserInfo(@RequestParam String access) {
+        Claims claims = tokenProvider.decodeJwt(access);
+        String email = claims.getSubject();
+        final var user = iAuthService.fetchUser(email);
+
+        if (user == null) {
+            throw new ResourceNotFoundException(email);
+        }
+        return new AuthResponse(user, access);
+    }
 
     @PostMapping("sign-up")
     public String createUser(@RequestBody ClientEntity clientEntity) {

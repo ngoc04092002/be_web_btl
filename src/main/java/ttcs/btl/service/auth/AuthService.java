@@ -2,7 +2,6 @@ package ttcs.btl.service.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ttcs.btl.dto.auth.AuthResponse;
 import ttcs.btl.dto.auth.UserResponse;
 import ttcs.btl.dto.clients.ClientResponse;
 import ttcs.btl.model.client.ClientEntity;

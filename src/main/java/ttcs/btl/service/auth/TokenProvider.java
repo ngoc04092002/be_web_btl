@@ -34,4 +34,12 @@ public class TokenProvider {
                 .signWith(Keys.hmacShaKeyFor(tokenSecret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
                 .compact();
     }
+    public Claims decodeJwt(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(tokenSecret.getBytes(StandardCharsets.UTF_8))
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody();
+    }
+
 }
