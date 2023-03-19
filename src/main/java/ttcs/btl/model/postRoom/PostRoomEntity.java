@@ -18,6 +18,8 @@ public class PostRoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
+    private String title;
     @Column(name = "src")
     private String src;
 
