@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.auth.AuthRequest;
+import ttcs.btl.dto.auth.AuthRequestSocial;
 import ttcs.btl.dto.auth.AuthResponse;
 import ttcs.btl.dto.auth.UserResponse;
 import ttcs.btl.model.client.ClientEntity;
@@ -22,14 +23,12 @@ import ttcs.btl.repository.error.ResourceNotFoundException;
 import ttcs.btl.service.auth.IAuthService;
 import ttcs.btl.service.auth.TokenProvider;
 
-import java.util.Arrays;
-
 @RestController
 @Validated
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/", produces = "application/json")
 public class AuthController {
-
+    private final String defaultPasswordSignInWithSocial = "12345678";
     private final PasswordEncoder passwordEncoder;
 
     private final IAuthService iAuthService;
@@ -88,6 +87,40 @@ public class AuthController {
             addTokenCookie(response, tokenCookieName, token);
             return new AuthResponse(user, token);
         }
+    }
+
+    @PostMapping("sign-in-social")
+    public AuthResponse authResponseWithSocial(@RequestBody @Valid AuthRequestSocial authRequestSocial,
+            HttpServletResponse response) {
+        final String email = authRequestSocial.getEmail();
+        final var user = iAuthService.fetchUser(email);
+        final var token = tokenProvider.createJwtToken(email);
+        addTokenCookie(response, tokenCookieName, token);
+        if (user == null) {
+            String encodedPassword = passwordEncoder.encode(defaultPasswordSignInWithSocial);
+            ClientEntity clientEntity = new ClientEntity(authRequestSocial,encodedPassword);
+            UserResponse userResponse = new UserResponse(clientEntity, encodedPassword);
+            iAuthService.saveUser(userResponse);
+            return new AuthResponse(clientEntity, token);
+        }
+
+        return new AuthResponse(user, token);
+    }
+
+    @GetMapping("/getCookie")
+    public String getCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println(cookie.getName());
+                if (cookie.getName()
+                        .equals("btl_ttcs")) {
+                    String cookieValue = cookie.getValue();
+                    return "Cookie value: " + cookieValue;
+                }
+            }
+        }
+        return "Cookie not found";
     }
 
 
