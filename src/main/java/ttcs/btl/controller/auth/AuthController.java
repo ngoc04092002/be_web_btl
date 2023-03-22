@@ -107,27 +107,18 @@ public class AuthController {
         return new AuthResponse(user, token);
     }
 
-    @GetMapping("/getCookie")
+    @GetMapping("/refresh-cookie")
     public String getCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                System.out.println(cookie.getName());
-                if (cookie.getName()
-                        .equals("btl_ttcs")) {
-                    String cookieValue = cookie.getValue();
-                    return "Cookie value: " + cookieValue;
-                }
-            }
-        }
-        return "Cookie not found";
+        String setCookie = request.getHeader(HttpHeaders.COOKIE);
+        if(setCookie.contains(tokenCookieName)) return "yes";
+        return "no";
     }
 
 
     private void addTokenCookie(HttpServletResponse response, final String cookieName, final String token) {
         ResponseCookie cookie = ResponseCookie.from(cookieName, token)
                 .path("/")
-                .maxAge(4 * 24 * 60 * 60) // 4 days
+                .maxAge(4*24*60*60) // 4 days
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
