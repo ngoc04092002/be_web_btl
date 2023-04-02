@@ -1,8 +1,10 @@
 package ttcs.btl.controller.clients;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.clients.ClientResponse;
+import ttcs.btl.dto.clients.PasswordRequest;
 import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.service.clients.IClientService;
 
@@ -25,6 +27,11 @@ public class ClientController {
     @PostMapping("save-client")
     public ClientResponse saveClient(@RequestBody ClientEntity clientEntity){
         return iClientService.saveClient(clientEntity);
+    }
+
+    @PutMapping("update-password")
+    public String updatePassword(@RequestBody @Valid PasswordRequest passwordRequest){
+        return iClientService.updatePassword(passwordRequest);
     }
 
     @DeleteMapping("/delete-client/{id}")

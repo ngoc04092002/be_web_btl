@@ -23,14 +23,17 @@ public class NewsEntity {
     @Column(name = "img")
     private String img;
 
+    @Column(name = "topic")
+    private String topic;
+
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "title")
     private String title;
 
     @Column(name = "des")
     private String des;
-
-    @Column(name = "poster_name", nullable = false, columnDefinition = "nvarchar(255) default ''")
-    private String posterName;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

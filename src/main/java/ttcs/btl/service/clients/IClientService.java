@@ -1,6 +1,7 @@
 package ttcs.btl.service.clients;
 
 import ttcs.btl.dto.clients.ClientResponse;
+import ttcs.btl.dto.clients.PasswordRequest;
 import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.model.news.NewsEntity;
 
@@ -11,6 +12,8 @@ public interface IClientService {
     List<ClientEntity> getAllCLients();
 
     ClientResponse saveClient(ClientEntity clientEntity);
+
+    String updatePassword(PasswordRequest passwordRequest);
 
     String deleteClient(Long id);
 }

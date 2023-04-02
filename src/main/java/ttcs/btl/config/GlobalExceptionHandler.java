@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ttcs.btl.repository.error.ArgumentException;
+import ttcs.btl.repository.error.EditProfileException;
 import ttcs.btl.repository.error.ResourceFoundException;
 import ttcs.btl.repository.error.ResourceNotFoundException;
 
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = ResourceNotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(ResourceNotFoundException ex) {
         // handle exception
-        return new ResponseEntity<>("Email " + ex.getMessage()+" không tồn tại hoặc mật khẩu sai!",
+        return new ResponseEntity<>(ex.getMessage() + " không tồn tại hoặc mật khẩu sai!",
                                     HttpStatus.NOT_FOUND);
     }
 
@@ -23,9 +24,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // handle exception
         return new ResponseEntity<>("Tài khoản đã tồn tại: " + ex.getMessage(), HttpStatus.FOUND);
     }
+
     @ExceptionHandler(value = ArgumentException.class)
     public ResponseEntity<String> handleArgumentException(ArgumentException ex) {
         return new ResponseEntity<>("Có lỗi xảy ra: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = EditProfileException.class)
+    public ResponseEntity<String> handleEditProfileException(EditProfileException ex) {
+        return new ResponseEntity<>("Thông tin của bạn không chính xác vui lòng thử lại!", HttpStatus.BAD_REQUEST);
     }
 
 }

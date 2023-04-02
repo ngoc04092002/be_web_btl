@@ -45,7 +45,7 @@ public class AuthController {
         final var user = iAuthService.fetchUser(email);
 
         if (user == null) {
-            throw new ResourceNotFoundException(email);
+            throw new ResourceNotFoundException("Email "+email);
         }
         return new AuthResponse(user, access);
     }
@@ -76,12 +76,12 @@ public class AuthController {
         final var user = iAuthService.fetchUser(email);
 
         if (user == null) {
-            throw new ResourceNotFoundException(email);
+            throw new ResourceNotFoundException("Email "+email);
         }
 
         boolean isMatcher = passwordEncoder.matches(password, user.getPassword());
         if (!isMatcher) {
-            throw new ResourceNotFoundException(email);
+            throw new ResourceNotFoundException("Email "+email);
         } else {
             final var token = tokenProvider.createJwtToken(email);
             addTokenCookie(response, tokenCookieName, token);
