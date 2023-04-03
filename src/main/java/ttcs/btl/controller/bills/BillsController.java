@@ -22,7 +22,10 @@ public class BillsController {
         List<BillEntity> allBills = iBillsService.getAllBills();
         return allBills.stream().map(this::billsResponse).toList();
     }
-
+    @DeleteMapping("/delete-bill/{id}")
+    public String deleteBill(@PathVariable("id") Long id){
+        return iBillsService.deleteBill(id);
+    }
     @PostMapping("save-bill")
     public BillEntity saveBill(@RequestBody BillEntity billEntity) {
         return iBillsService.saveBill(billEntity);

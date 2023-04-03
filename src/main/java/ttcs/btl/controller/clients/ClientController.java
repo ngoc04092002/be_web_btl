@@ -20,7 +20,6 @@ public class ClientController {
     @GetMapping("getAll-clients")
     public List<ClientResponse> getAllNews(){
         List<ClientEntity> allCLients = iClientService.getAllCLients();
-
         return allCLients.stream().map(this::clientResponse).toList();
     }
 
