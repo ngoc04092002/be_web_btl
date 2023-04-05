@@ -15,6 +15,14 @@ public class BillEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "deposit")
+    private String deposit;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @PrePersist

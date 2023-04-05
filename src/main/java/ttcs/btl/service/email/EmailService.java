@@ -25,6 +25,7 @@ public class EmailService {
     private final PasswordEncoder passwordEncoder;
 
     public String sendEmail(String to) throws MessagingException {
+
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(MimeMessage.RecipientType.TO, to);
@@ -60,4 +61,6 @@ public class EmailService {
 
         return "success";
     }
+
+
 }

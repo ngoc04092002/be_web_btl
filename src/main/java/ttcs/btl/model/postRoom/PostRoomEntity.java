@@ -62,7 +62,6 @@ public class PostRoomEntity {
     }
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_bill_id", referencedColumnName = "id")
     private BillEntity billEntity;
 
     @ManyToOne(cascade = CascadeType.ALL)

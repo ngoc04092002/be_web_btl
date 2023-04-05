@@ -1,8 +1,7 @@
 package ttcs.btl.model.client;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import ttcs.btl.dto.auth.AuthRequestSocial;
 import ttcs.btl.dto.auth.UserResponse;
 import ttcs.btl.model.QAEntity.QAEntity;
@@ -14,10 +13,13 @@ import ttcs.btl.model.postRoom.PostRoomEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Entity
 @Table(name = "clients")
+@NoArgsConstructor
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,7 +89,7 @@ public class ClientEntity {
     @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
-    @OneToMany(mappedBy = "clientEntityBill", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clientEntityBill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillEntity> billEntities;
 
     @OneToMany(mappedBy = "clientEntityPostRoom", cascade = CascadeType.ALL)
