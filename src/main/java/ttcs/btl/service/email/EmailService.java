@@ -11,10 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.model.client.EWaitingR;
 import ttcs.btl.repository.clients.IClientRepo;
 import ttcs.btl.repository.clients.IEWRRepo;
 import ttcs.btl.repository.error.ArgumentException;
+import ttcs.btl.repository.error.EditProfileException;
 import ttcs.btl.service.auth.TokenProvider;
 
 import java.util.Optional;
@@ -32,7 +34,10 @@ public class EmailService {
     private final PasswordEncoder passwordEncoder;
 
     public String sendEmail(String to) throws MessagingException {
-
+        final ClientEntity clientEntity = iClientRepo.findByEmail(to);
+        if(clientEntity==null){
+            throw new EditProfileException("");
+        }
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(MimeMessage.RecipientType.TO, to);

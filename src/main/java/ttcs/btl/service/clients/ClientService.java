@@ -8,7 +8,6 @@ import ttcs.btl.dto.clients.PasswordRequest;
 import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.repository.clients.IClientRepo;
 import ttcs.btl.repository.error.EditProfileException;
-import ttcs.btl.repository.error.ResourceNotFoundException;
 
 import java.util.List;
 
