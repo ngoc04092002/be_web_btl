@@ -35,6 +35,9 @@ public class NewsEntity {
     @Column(name = "des")
     private String des;
 
+    @Column(name = "body")
+    private String body;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

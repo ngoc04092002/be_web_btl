@@ -1,7 +1,6 @@
 package ttcs.btl.controller.auth;
 
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -28,7 +27,7 @@ import ttcs.btl.service.auth.TokenProvider;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/", produces = "application/json")
 public class AuthController {
-    private final String defaultPasswordSignInWithSocial = "12345678";
+    private final String defaultPasswordSignInWithSocial = "12345678A@";
     private final PasswordEncoder passwordEncoder;
 
     private final IAuthService iAuthService;

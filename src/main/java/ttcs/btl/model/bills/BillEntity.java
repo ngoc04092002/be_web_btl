@@ -32,7 +32,7 @@ public class BillEntity {
 
     @OneToOne(mappedBy = "billEntity")
     private PostRoomEntity postRoomEntity;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_bill_client_id", referencedColumnName = "id")
     private ClientEntity clientEntityBill;
 }

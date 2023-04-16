@@ -19,6 +19,7 @@ import ttcs.btl.repository.error.ArgumentException;
 import ttcs.btl.repository.error.EditProfileException;
 import ttcs.btl.service.auth.TokenProvider;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -46,12 +47,12 @@ public class EmailService {
         String encodeEmail = tokenProvider.createJwtToken(to);
 
         String htmlContent = "<h1>BẠN ĐÃ YÊU CẦU LẤY LẠI MẬT KHẨU</h1>" +
-                "<p>BẠN ĐÃ YÊU CẦU LẤY LẠI MẬT KHẨU</p>"+
+                "<p>KHÔNG ĐƯỢC CUNG CÂP ĐƯỜNG LINK BÊN DƯỚI TỚI NGƯỜI KHÁC!</p>"+
                 "<a href=\"http://localhost:2002/reset-password/"+encodeEmail+"\">Nhấn vào đường link để lấy lại " +
                 "mật khẩu</a>";
         message.setContent(htmlContent, "text/html; charset=utf-8");
         Optional<EWaitingR> isEmailExist = Optional.ofNullable(iewrRepo.findByEmail(to));
-        if(isEmailExist.isPresent()){
+        if(!isEmailExist.isPresent()){
             EWaitingR eWaitingR = EWaitingR.builder()
                     .email(to)
                     .build();
@@ -83,5 +84,13 @@ public class EmailService {
         return "success";
     }
 
+    public List<EWaitingR> getAllEWaitingR(){
+        return iewrRepo.findAll();
+    }
+
+
+    public void deleteUserEmailWithIds(List<Long> ids) {
+        iewrRepo.deleteUserEmailWithIds(ids);
+    }
 
 }

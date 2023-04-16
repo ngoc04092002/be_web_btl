@@ -2,6 +2,7 @@ package ttcs.btl.controller.bills;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.bills.BillsResponse;
 import ttcs.btl.model.bills.BillEntity;
@@ -24,7 +25,7 @@ public class BillsController {
     }
 
     @PostMapping("save-bill")
-    public BillEntity saveBill(@RequestBody BillEntity billEntity) {
+    public Boolean saveBill(@RequestBody BillEntity billEntity) {
 
         return iBillService.saveBill(billEntity);
     }

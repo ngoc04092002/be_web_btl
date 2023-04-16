@@ -9,4 +9,5 @@ import ttcs.btl.model.client.ClientEntity;
 public interface IClientRepo extends JpaRepository<ClientEntity, Long> {
     ClientEntity findByEmail(String email);
 
+
 }
