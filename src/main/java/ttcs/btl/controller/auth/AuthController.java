@@ -19,14 +19,20 @@ import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.repository.error.ArgumentException;
 import ttcs.btl.repository.error.ResourceFoundException;
 import ttcs.btl.repository.error.ResourceNotFoundException;
+import ttcs.btl.repository.error.ValidateException;
 import ttcs.btl.service.auth.IAuthService;
 import ttcs.btl.service.auth.TokenProvider;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @Validated
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/", produces = "application/json")
 public class AuthController {
+    private final String REGEX_EMAIL = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]+\\b";
+    private final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$";
     private final String defaultPasswordSignInWithSocial = "12345678A@";
     private final PasswordEncoder passwordEncoder;
 
@@ -52,6 +58,16 @@ public class AuthController {
     @PostMapping("sign-up")
     public String createUser(@RequestBody ClientEntity clientEntity) {
         try {
+            Pattern patternEmail = Pattern.compile(REGEX_EMAIL, Pattern.CASE_INSENSITIVE);
+            Pattern patternPassword = Pattern.compile(REGEX_PASSWORD, Pattern.CASE_INSENSITIVE);
+            Matcher matcherEmail = patternEmail.matcher(clientEntity.getEmail());
+            Matcher matcherPassword = patternPassword.matcher(clientEntity.getPassword());
+            if(!matcherEmail.matches()){
+                throw new ValidateException("Email không hợp lệ!");
+            }
+            if(!matcherPassword.matches()){
+                throw new ValidateException("Password cần có ký tự đặc biệt, chữ,số!");
+            }
             String encodedPassword = passwordEncoder.encode(clientEntity.getPassword());
             UserResponse userResponse = new UserResponse(clientEntity, encodedPassword);
             String email = clientEntity.getEmail();

@@ -23,8 +23,8 @@ public class NewsController {
         return dailyPostEntities.stream().map(this::newsResponse).toList();
     }
 
-    @PostMapping("save-post")
-    public NewsResponse saveNewsPost(@RequestBody NewsEntity newsEntity){
+    @PostMapping("save-news")
+    public Boolean saveNewsPost(@RequestBody NewsEntity newsEntity){
         return iNewsService.saveNews(newsEntity);
     }
 

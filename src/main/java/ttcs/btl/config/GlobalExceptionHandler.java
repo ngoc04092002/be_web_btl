@@ -5,10 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ttcs.btl.repository.error.ArgumentException;
-import ttcs.btl.repository.error.EditProfileException;
-import ttcs.btl.repository.error.ResourceFoundException;
-import ttcs.btl.repository.error.ResourceNotFoundException;
+import ttcs.btl.repository.error.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -33,6 +30,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = EditProfileException.class)
     public ResponseEntity<String> handleEditProfileException(EditProfileException ex) {
         return new ResponseEntity<>("Thông tin của bạn không chính xác vui lòng thử lại!", HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = ValidateException.class)
+    public ResponseEntity<String> handleEditProfileException(ValidateException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

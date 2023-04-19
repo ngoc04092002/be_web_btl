@@ -1,8 +1,10 @@
 {
   "img": "https://media.timeout.com/images/105241469/image.jpg",
+  "topic": "tin-tuc-bds",
+  "type": "thi-truong-nha-dat",
   "title": "halong",
   "des": "name",
-  "posterName": "hi",
+  "body": "hi",
   "clientEntity":{
     "avatar": "",
     "username": "test1",
