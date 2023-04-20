@@ -45,4 +45,5 @@ app:
     tokenCookieName: btl_ttcs
     tokenExpirationMsec: 604800000
     tokenSecret: key_privateakshdjasd129p8u91p8j$@
+    claimName: roleCode
 

@@ -44,7 +44,7 @@ public class EmailService {
         message.setRecipients(MimeMessage.RecipientType.TO, to);
         message.setSubject("QUÊN MẬT KHẨU");
 
-        String encodeEmail = tokenProvider.createJwtToken(to);
+        String encodeEmail = tokenProvider.createJwtToken(to, "user");
 
         String htmlContent = "<h1>BẠN ĐÃ YÊU CẦU LẤY LẠI MẬT KHẨU</h1>" +
                 "<p>KHÔNG ĐƯỢC CUNG CÂP ĐƯỜNG LINK BÊN DƯỚI TỚI NGƯỜI KHÁC!</p>"+

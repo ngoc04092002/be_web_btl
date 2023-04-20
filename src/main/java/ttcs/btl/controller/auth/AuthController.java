@@ -23,6 +23,7 @@ import ttcs.btl.repository.error.ValidateException;
 import ttcs.btl.service.auth.IAuthService;
 import ttcs.btl.service.auth.TokenProvider;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,6 +46,10 @@ public class AuthController {
 
     @GetMapping("get-user-info")
     public AuthResponse getUserInfo(@RequestParam String access) {
+        final var isAccess = tokenProvider.validateToken(access);
+        if(!isAccess){
+            throw new ArgumentException("Hết phiên đăng nhập");
+        }
         Claims claims = tokenProvider.decodeJwt(access);
         String email = claims.getSubject();
         final var user = iAuthService.fetchUser(email);
@@ -98,7 +103,7 @@ public class AuthController {
         if (!isMatcher) {
             throw new ResourceNotFoundException("Email "+email);
         } else {
-            final var token = tokenProvider.createJwtToken(email);
+            final var token = tokenProvider.createJwtToken(email, "user");
             addTokenCookie(response, tokenCookieName, token);
             return new AuthResponse(user, token);
         }
@@ -109,7 +114,7 @@ public class AuthController {
             HttpServletResponse response) {
         final String email = authRequestSocial.getEmail();
         final var user = iAuthService.fetchUser(email);
-        final var token = tokenProvider.createJwtToken(email);
+        final var token = tokenProvider.createJwtToken(email, "user");
         addTokenCookie(response, tokenCookieName, token);
         if (user == null) {
             String encodedPassword = passwordEncoder.encode(defaultPasswordSignInWithSocial);
@@ -122,10 +127,10 @@ public class AuthController {
         return new AuthResponse(user, token);
     }
 
-    @GetMapping("/refresh-cookie")
-    public String getCookie(HttpServletRequest request) {
-        String setCookie = request.getHeader(HttpHeaders.COOKIE);
-        if(setCookie.contains(tokenCookieName)) return "yes";
+    @GetMapping("refresh-cookie")
+    public String refreshCookie(@RequestParam String token) {
+        final var isAccess = tokenProvider.validateToken(token);
+        if(isAccess) return "yes";
         return "no";
     }
 
@@ -133,7 +138,7 @@ public class AuthController {
     private void addTokenCookie(HttpServletResponse response, final String cookieName, final String token) {
         ResponseCookie cookie = ResponseCookie.from(cookieName, token)
                 .path("/")
-                .maxAge(4*24*60*60) // 4 days
+                .maxAge(60) // 4 days
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
