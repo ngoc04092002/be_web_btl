@@ -28,10 +28,8 @@ public class QAEntity {
     @Column(name = "img")
     private String img;
 
-    @ElementCollection
-    @JoinTable(name = "qas_likes", joinColumns = @JoinColumn(name = "like_id"))
-    @Column(name = "likes")
-    List<LikesQAEntity> likes;
+    @OneToMany(mappedBy = "likesQAEntity", cascade = CascadeType.ALL)
+    private  List<LikesQAEntity> likes;
 
     @OneToMany(mappedBy = "qaEntityComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;

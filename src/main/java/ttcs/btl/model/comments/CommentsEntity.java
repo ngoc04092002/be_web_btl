@@ -20,10 +20,8 @@ public class CommentsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection
-    @JoinTable(name = "comment_likes", joinColumns = @JoinColumn(name = "like_id"))
-    @Column(name = "likes")
-    List<LikeCommentEntity> likes;
+    @OneToMany(mappedBy = "commentsEntity", cascade = CascadeType.ALL)
+    private List<LikeCommentEntity> likes;
 
     @Column(name = "content")
     private String content;
