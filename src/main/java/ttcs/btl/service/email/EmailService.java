@@ -73,7 +73,7 @@ public class EmailService {
             if(isExistEmailCLient == null ||isEmailExistEWR.isEmpty()){
                 throw new ArgumentException("Cảnh báo!!");
             }else{
-                isExistEmailCLient.setPassword(passwordEncoder.encode("12345678"));
+                isExistEmailCLient.setPassword(passwordEncoder.encode("12345678A@"));
                 iewrRepo.deleteByEmail(email);
                 iClientRepo.save(isExistEmailCLient);
             }
