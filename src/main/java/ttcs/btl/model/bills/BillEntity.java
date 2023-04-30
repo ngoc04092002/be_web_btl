@@ -1,5 +1,6 @@
 package ttcs.btl.model.bills;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import ttcs.btl.model.postRoom.PostRoomEntity;
@@ -32,6 +33,7 @@ public class BillEntity {
 
     @OneToOne(mappedBy = "billEntity")
     private PostRoomEntity postRoomEntity;
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_bill_client_id", referencedColumnName = "id")
     private ClientEntity clientEntityBill;

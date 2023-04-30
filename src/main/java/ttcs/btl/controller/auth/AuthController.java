@@ -138,7 +138,7 @@ public class AuthController {
     private void addTokenCookie(HttpServletResponse response, final String cookieName, final String token) {
         ResponseCookie cookie = ResponseCookie.from(cookieName, token)
                 .path("/")
-                .maxAge(60) // 4 days
+                .maxAge(7 * 24 * 60 * 60) // 7 days
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")

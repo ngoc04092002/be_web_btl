@@ -1,7 +1,9 @@
 package ttcs.btl.model.news;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,14 @@ public class NewsPiece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long like_id;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "des")
+    private String des;
+    @Column(name = "img")
+    private String img;
+    @Column(name = "caption")
+    private String caption;
     @Column(name = "body")
     private String body;
 
@@ -27,7 +37,8 @@ public class NewsPiece {
         createdAt = LocalDateTime.now();
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fk_news_entity_id", referencedColumnName = "id")
     private NewsEntity newsBody;
 }

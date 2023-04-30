@@ -28,8 +28,6 @@ public class TokenProvider {
                     .parseClaimsJws(token);
             Date expirationDate = claimsJws.getBody().getExpiration();
             Date currentTime = new Date();
-            System.out.println(expirationDate);
-            System.out.println(currentTime);
             return !expirationDate.before(new Date());
         }catch (MalformedJwtException sie){
             System.out.println("MalformedJwtException: "+sie);
@@ -51,7 +49,7 @@ public class TokenProvider {
 
     private String buildJwtToken(String email, String roles) {
         final var now = new Date();
-        final var expireDate = new Date(now.getTime() + 20000);
+        final var expireDate = new Date(now.getTime() + tokenExpirationMsec);
         Claims claims = Jwts.claims()
                 .setSubject(email);
         claims.put(roleCode, roles);

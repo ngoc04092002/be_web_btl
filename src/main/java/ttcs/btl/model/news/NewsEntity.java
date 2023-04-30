@@ -1,12 +1,15 @@
 package ttcs.btl.model.news;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ttcs.btl.model.QAEntity.LikesQAEntity;
 import ttcs.btl.model.client.ClientEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +19,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewsEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class NewsEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +58,13 @@ public class NewsEntity {
         updatedAt = LocalDateTime.now();
     }
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_news_client_id", referencedColumnName = "id")
     private ClientEntity clientEntity;
 
-    @OneToMany(mappedBy = "newsBody", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "newsBody", cascade = CascadeType.REMOVE)
     private List<NewsPiece> newsBody;
 
 }

@@ -1,25 +1,25 @@
-create table daily_posts
-(
-    daily_post_id bigint(20) unsigned not null auto_increment,
-    img           text,
-    title         text,
-    des           text,
-    poster_name   nvarchar(255)                default '',
-    created_at    TIMESTAMP           NOT NULL default now(),
-    updated_at    TIMESTAMP           NOT NULL default now(),
-    primary key (daily_post_id)
-);
+ALTER TABLE `db_sql`.`news_piece`
+    CHANGE COLUMN `des` `des` TEXT NULL DEFAULT NULL ;
+ALTER TABLE `db_sql`.`news_piece`
+    CHANGE COLUMN `body` `body` TEXT NULL DEFAULT NULL ;
+ALTER TABLE `db_sql`.`news_piece`
+    CHANGE COLUMN `img` `img` TEXT NULL DEFAULT NULL ;
+ALTER TABLE `db_sql`.`news_piece`
+    CHANGE COLUMN `title` `title` TEXT NULL DEFAULT NULL ;
 
-create table daily_post_entity_likes
-(
-    daily_post_entity_id bigint(20) unsigned not null auto_increment,
-    likes                varchar(255)
-);
-
-create table daily_post_entity_favorites
-(
-    daily_post_entity_id bigint(20) unsigned not null auto_increment,
-    favorites                varchar(255)
-);
+ALTER TABLE `db_sql`.`news`
+    CHANGE COLUMN `des` `des` TEXT NULL DEFAULT NULL ;
+ALTER TABLE `db_sql`.`news`
+    CHANGE COLUMN `img` `img` TEXT NULL DEFAULT NULL ;
+ALTER TABLE `db_sql`.`news`
+    CHANGE COLUMN `title` `title` TEXT NULL DEFAULT NULL ;
 
 
+# ALTER TABLE news_piece
+#     DROP FOREIGN KEY fk_news_piece_1;
+
+ALTER TABLE news_piece
+    ADD CONSTRAINT FK_newspiece_newsid
+        FOREIGN KEY (fk_news_entity_id)
+            REFERENCES news(id)
+            ON DELETE CASCADE;
