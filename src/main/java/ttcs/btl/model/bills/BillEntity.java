@@ -1,6 +1,7 @@
 package ttcs.btl.model.bills;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import ttcs.btl.model.postRoom.PostRoomEntity;
@@ -31,10 +32,10 @@ public class BillEntity {
         createdAt = LocalDateTime.now();
     }
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "billEntity")
     private PostRoomEntity postRoomEntity;
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fk_bill_client_id", referencedColumnName = "id")
     private ClientEntity clientEntityBill;
 }

@@ -26,19 +26,19 @@ public class NewsEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "img")
+    @Column(name = "img", columnDefinition = "text")
     private String img;
 
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "text")
     private String type;
 
-    @Column(name = "topic")
+    @Column(name = "topic", columnDefinition = "text")
     private String topic;
 
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "text")
     private String title;
 
-    @Column(name = "des")
+    @Column(name = "des", columnDefinition = "text")
     private String des;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -63,8 +63,8 @@ public class NewsEntity implements Serializable {
     @JoinColumn(name = "fk_news_client_id", referencedColumnName = "id")
     private ClientEntity clientEntity;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "newsBody", cascade = CascadeType.REMOVE)
+    @JsonManagedReference(value = "fk_news_body")
+    @OneToMany(mappedBy = "newsBody", cascade = CascadeType.ALL)
     private List<NewsPiece> newsBody;
 
 }

@@ -19,34 +19,36 @@ public class ClientController {
     private final IClientService iClientService;
 
     @GetMapping("getAll-clients")
-    public List<ClientResponse> getAllNews(){
+    public List<ClientResponse> getAllNews() {
         List<ClientEntity> allCLients = iClientService.getAllCLients();
 
-        return allCLients.stream().map(this::clientResponse).toList();
+        return allCLients.stream()
+                .map(this::clientResponse)
+                .toList();
     }
 
     @PostMapping("save-client")
-    public ClientResponse saveClient(@RequestBody ClientEntity clientEntity){
+    public ClientResponse saveClient(@RequestBody ClientEntity clientEntity) {
         return iClientService.saveClient(clientEntity);
     }
 
     @PutMapping("update-password")
-    public String updatePassword(@RequestBody @Valid PasswordRequest passwordRequest){
+    public String updatePassword(@RequestBody @Valid PasswordRequest passwordRequest) {
         return iClientService.updatePassword(passwordRequest);
     }
 
     @PutMapping("update-client-info")
     public ClientResponse updatePassword(@RequestBody @Valid UpdateClientRequest updateClientRequest,
-            @RequestParam String oldEmail){
+            @RequestParam String oldEmail) {
         return iClientService.updateClient(updateClientRequest, oldEmail);
     }
 
     @DeleteMapping("/delete-client/{id}")
-    public String deleteClient(@PathVariable("id") Long id){
+    public String deleteClient(@PathVariable("id") Long id) {
         return iClientService.deleteClient(id);
     }
 
-    private ClientResponse clientResponse(ClientEntity clientEntity){
+    private ClientResponse clientResponse(ClientEntity clientEntity) {
         return new ClientResponse(clientEntity);
     }
 }

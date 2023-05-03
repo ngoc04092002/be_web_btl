@@ -1,0 +1,17 @@
+{
+  "title": "test",
+  "src": [{"src":"https"}],
+  "address": "hn",
+  "phone": "123",
+  "price": "24",
+  "roomType": "nha",
+  "bedRoom": "2",
+  "sale": "20",
+  "acreage": "25",
+  "limitNumberPeople": 2,
+  "des": "ok",
+  "bathroom": "2",
+  "clientEntityPostRoom":{
+    "id":1
+  }
+}

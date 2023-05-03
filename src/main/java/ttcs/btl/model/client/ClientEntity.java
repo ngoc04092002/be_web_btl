@@ -1,5 +1,7 @@
 package ttcs.btl.model.client;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import ttcs.btl.dto.auth.AuthRequestSocial;
@@ -80,18 +82,23 @@ public class ClientEntity {
         createdAt = LocalDateTime.now();
     }
 
+    @JsonBackReference(value = "client_news")
     @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.ALL)
     private List<NewsEntity> newsEntityList;
 
+    @JsonBackReference(value = "client_qa")
     @OneToMany(mappedBy = "clientEntityQa", cascade = CascadeType.ALL)
     private List<QAEntity> qaEntities;
 
+    @JsonBackReference(value = "client_comment")
     @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
+    @JsonBackReference(value = "client_bill")
     @OneToMany(mappedBy = "clientEntityBill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillEntity> billEntities;
 
+    @JsonBackReference(value = "client_post_room")
     @OneToMany(mappedBy = "clientEntityPostRoom", cascade = CascadeType.ALL)
     private List<PostRoomEntity> postRoomEntities;
 }

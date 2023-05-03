@@ -8,7 +8,6 @@ import ttcs.btl.dto.clients.ClientResponse;
 import ttcs.btl.dto.clients.PasswordRequest;
 import ttcs.btl.dto.clients.UpdateClientRequest;
 import ttcs.btl.model.client.ClientEntity;
-import ttcs.btl.model.client.EWaitingR;
 import ttcs.btl.repository.clients.IClientRepo;
 import ttcs.btl.repository.error.ArgumentException;
 import ttcs.btl.repository.error.EditProfileException;
@@ -36,13 +35,13 @@ public class ClientService implements IClientService {
     @Override
     public String updatePassword(PasswordRequest passwordRequest) {
         final ClientEntity clientEntity = iClientRepo.findByEmail(passwordRequest.getEmail());
-        if(clientEntity==null){
+        if (clientEntity == null) {
             throw new EditProfileException("");
         }
         boolean isMatcher = passwordEncoder.matches(passwordRequest.getOldPassword(), clientEntity.getPassword());
-        if(!isMatcher){
+        if (!isMatcher) {
             throw new EditProfileException("");
-        }else{
+        } else {
             String newPassword = passwordRequest.getPassword();
             String encodedPassword = passwordEncoder.encode(newPassword);
             clientEntity.setPassword(encodedPassword);
@@ -61,27 +60,31 @@ public class ClientService implements IClientService {
 
     @Override
     public ClientResponse updateClient(UpdateClientRequest updateClientRequest, String oldEmail) {
-        Optional<ClientEntity> clientEntityOptional =
-                Optional.ofNullable(iClientRepo.findByEmail(updateClientRequest.getEmail()));
-        if(clientEntityOptional.isPresent() && !oldEmail.equals(clientEntityOptional.get().getEmail())){
+        Optional<ClientEntity> clientEntityOptional = Optional.ofNullable(
+                iClientRepo.findByEmail(updateClientRequest.getEmail()));
+        if (clientEntityOptional.isPresent() && !oldEmail.equals(clientEntityOptional.get()
+                                                                         .getEmail())) {
             throw new ArgumentException("Email đã tồn tại!");
         }
         ClientEntity currentClientEntity = iClientRepo.findByEmail(oldEmail);
         String username = updateClientRequest.getUsername();
         String address = updateClientRequest.getAddress();
         String sdt = updateClientRequest.getSdt();
-        if(StringUtils.isNotBlank(username)){
+        String avatar = updateClientRequest.getAvatar();
+        if (StringUtils.isNotBlank(username)) {
             currentClientEntity.setUsername(username);
         }
-        if(StringUtils.isNotBlank(address)){
+        if (StringUtils.isNotBlank(address)) {
             currentClientEntity.setAddress(address);
         }
-        if(StringUtils.isNotBlank(sdt)){
+        if (StringUtils.isNotBlank(sdt)) {
             currentClientEntity.setSdt(sdt);
+        }
+        if (StringUtils.isNotBlank(avatar)) {
+            currentClientEntity.setAvatar(avatar);
         }
         currentClientEntity.setEmail(updateClientRequest.getEmail());
         currentClientEntity.setGender(updateClientRequest.getGender());
-        currentClientEntity.setAvatar(updateClientRequest.getAvatar());
         iClientRepo.save(currentClientEntity);
         return new ClientResponse(currentClientEntity);
     }
