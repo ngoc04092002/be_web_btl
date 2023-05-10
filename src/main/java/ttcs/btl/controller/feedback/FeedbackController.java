@@ -2,6 +2,7 @@ package ttcs.btl.controller.feedback;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ttcs.btl.dto.feedbacks.FeedbackReportInfo;
 import ttcs.btl.model.feedbacks.FeedbackEntity;
 import ttcs.btl.service.feedbacks.IFeedbackService;
 
@@ -22,6 +23,11 @@ public class FeedbackController {
     @GetMapping("get-all-feedback")
     public List<FeedbackEntity> getAllFeedback(){
         return iFeedbackService.getAllFeedback();
+    }
+
+    @GetMapping("feedback-report-info")
+    public FeedbackReportInfo getFeedbackReportInfo(){
+        return  iFeedbackService.countFeedbackByTypeAndMonth();
     }
 
     @PostMapping("delete-feedback-ids")
