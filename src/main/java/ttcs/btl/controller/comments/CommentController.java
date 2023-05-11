@@ -22,7 +22,7 @@ public class CommentController {
     }
 
     @PostMapping("save-comment")
-    public CommentsEntity saveComment(@RequestBody CommentsEntity commentsEntity){
+    public Boolean saveComment(@RequestBody CommentsEntity commentsEntity){
         return iCommentsService.saveComment(commentsEntity);
     }
 

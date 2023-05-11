@@ -8,6 +8,6 @@ import java.util.List;
 public interface ICommentsService {
     List<CommentsEntity> getAllComments();
 
-    CommentsEntity saveComment(CommentsEntity commentsEntity);
+    Boolean saveComment(CommentsEntity commentsEntity);
     String deleteComment(Long id);
 }
