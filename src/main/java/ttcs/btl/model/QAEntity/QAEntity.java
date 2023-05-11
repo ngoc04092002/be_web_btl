@@ -35,7 +35,8 @@ public class QAEntity implements Serializable {
     @Column(name = "img",columnDefinition = "text")
     private String img;
 
-    @OneToMany
+    @JsonManagedReference(value = "qa_likes")
+    @OneToMany(mappedBy = "qaEntity", cascade = CascadeType.ALL)
     private  List<LikesQAEntity> likes;
 
     @JsonManagedReference(value = "qa_comment")

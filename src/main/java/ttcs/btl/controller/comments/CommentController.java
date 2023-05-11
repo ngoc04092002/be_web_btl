@@ -2,6 +2,7 @@ package ttcs.btl.controller.comments;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ttcs.btl.model.comments.CommentChild;
 import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.service.comments.ICommentsService;
 
@@ -24,6 +25,11 @@ public class CommentController {
     @PostMapping("save-comment")
     public Boolean saveComment(@RequestBody CommentsEntity commentsEntity){
         return iCommentsService.saveComment(commentsEntity);
+    }
+
+    @PostMapping("save-comment-child")
+    public CommentChild saveCommentChild(@RequestBody CommentChild commentChild){
+        return iCommentsService.createCommentChild(commentChild);
     }
 
     @DeleteMapping("delete-comment/{id}")

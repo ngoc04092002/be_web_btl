@@ -4,6 +4,7 @@ package ttcs.btl.controller.qas;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.qas.QAResponse;
+import ttcs.btl.model.QAEntity.LikesQAEntity;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.service.qas.IQAService;
 
@@ -27,6 +28,16 @@ public class QAController {
     public List<QAEntity> filterQA(@RequestParam(defaultValue = "") String s,
             @RequestParam(defaultValue = "8") Integer limit, @RequestParam(defaultValue = "0") Integer offset) {
         return iqaService.filterQA(s, limit, offset);
+    }
+
+    @GetMapping("get-likes")
+    public List<LikesQAEntity> getLikes(){
+        return iqaService.getLikes();
+    }
+
+    @PostMapping("toggle-like")
+    public Integer toggleLike(@RequestBody LikesQAEntity likesQAEntity){
+        return iqaService.toggleLike(likesQAEntity);
     }
 
     @PostMapping("save-QA")

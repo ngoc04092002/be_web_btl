@@ -15,8 +15,8 @@ ALTER TABLE `db_sql`.`news`
     CHANGE COLUMN `title` `title` TEXT NULL DEFAULT NULL ;
 
 
-# ALTER TABLE news_piece
-#     DROP FOREIGN KEY fk_news_piece_1;
+# ALTER TABLE clients
+#     DROP FOREIGN KEY FK3g6e51o2ovgxvty5k330c8coy;
 
 ALTER TABLE news_piece
     ADD CONSTRAINT FK_newspiece_newsid

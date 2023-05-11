@@ -7,8 +7,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import ttcs.btl.dto.auth.AuthRequestSocial;
 import ttcs.btl.dto.auth.UserResponse;
+import ttcs.btl.model.QAEntity.LikesQAEntity;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.model.bills.BillEntity;
+import ttcs.btl.model.comments.CommentChild;
 import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.model.news.NewsEntity;
 import ttcs.btl.model.postRoom.PostRoomEntity;
@@ -97,6 +99,10 @@ public class ClientEntity implements Serializable {
     @OneToMany(mappedBy = "clientComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
+    @JsonBackReference(value = "client_comment_child")
+    @OneToMany(mappedBy = "clientComment", cascade = CascadeType.ALL)
+    private List<CommentChild> commentChildren;
+
     @JsonBackReference(value = "client_bill")
     @OneToMany(mappedBy = "clientEntityBill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillEntity> billEntities;
@@ -104,4 +110,9 @@ public class ClientEntity implements Serializable {
     @JsonBackReference(value = "client_post_room")
     @OneToMany(mappedBy = "clientEntityPostRoom", cascade = CascadeType.ALL)
     private List<PostRoomEntity> postRoomEntities;
+
+
+    @JsonBackReference(value = "like_client")
+    @OneToOne(mappedBy = "clientLikeEntities", cascade = CascadeType.ALL)
+    private LikesQAEntity likesQAEntities;
 }

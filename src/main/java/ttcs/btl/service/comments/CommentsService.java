@@ -2,7 +2,9 @@ package ttcs.btl.service.comments;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ttcs.btl.model.comments.CommentChild;
 import ttcs.btl.model.comments.CommentsEntity;
+import ttcs.btl.repository.comments.ICommentChildRepo;
 import ttcs.btl.repository.comments.ICommentsRepo;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 public class CommentsService implements ICommentsService{
 
     private final ICommentsRepo iCommentsRepo;
+    private final ICommentChildRepo iCommentChildRepo;
     @Override
     public List<CommentsEntity> getAllComments() {
         return iCommentsRepo.findAll();
@@ -31,5 +34,10 @@ public class CommentsService implements ICommentsService{
     public String deleteComment(Long id) {
         iCommentsRepo.deleteById(id);
         return "delete successfully";
+    }
+
+    @Override
+    public CommentChild createCommentChild(CommentChild commentChild) {
+        return iCommentChildRepo.save(commentChild);
     }
 }

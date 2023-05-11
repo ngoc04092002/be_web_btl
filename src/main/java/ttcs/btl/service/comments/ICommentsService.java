@@ -1,6 +1,7 @@
 package ttcs.btl.service.comments;
 
 import ttcs.btl.model.QAEntity.QAEntity;
+import ttcs.btl.model.comments.CommentChild;
 import ttcs.btl.model.comments.CommentsEntity;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface ICommentsService {
 
     Boolean saveComment(CommentsEntity commentsEntity);
     String deleteComment(Long id);
+
+    CommentChild createCommentChild(CommentChild commentChild);
 }

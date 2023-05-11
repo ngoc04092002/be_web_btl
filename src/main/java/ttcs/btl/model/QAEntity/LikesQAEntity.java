@@ -1,12 +1,15 @@
 package ttcs.btl.model.QAEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import ttcs.btl.model.client.ClientEntity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "qas_likes")
@@ -17,11 +20,11 @@ import java.time.LocalDateTime;
 public class LikesQAEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long like_id;
-    @Column(name = "client_id")
-    private Long client_id;
-    @Column(name = "post_id")
-    private Long post_id;
+    private Long id;
+    @JsonManagedReference(value = "like_client")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_like_client_id", referencedColumnName = "id")
+    private ClientEntity clientLikeEntities;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -30,5 +33,10 @@ public class LikesQAEntity implements Serializable {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    @JsonBackReference(value = "qa_likes")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_qa_likes_id", referencedColumnName = "id")
+    private QAEntity qaEntity;
 
 }
