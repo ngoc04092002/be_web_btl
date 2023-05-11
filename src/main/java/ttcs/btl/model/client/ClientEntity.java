@@ -113,6 +113,6 @@ public class ClientEntity implements Serializable {
 
 
     @JsonBackReference(value = "like_client")
-    @OneToOne(mappedBy = "clientLikeEntities", cascade = CascadeType.ALL)
-    private LikesQAEntity likesQAEntities;
+    @OneToMany(mappedBy = "clientLikeEntities", cascade = CascadeType.ALL)
+    private List<LikesQAEntity> likesQAEntities;
 }

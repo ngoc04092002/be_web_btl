@@ -21,8 +21,8 @@ public class LikesQAEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonManagedReference(value = "like_client")
-    @OneToOne(fetch = FetchType.LAZY)
+//    @JsonManagedReference(value = "like_client")
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_like_client_id", referencedColumnName = "id")
     private ClientEntity clientLikeEntities;
 
