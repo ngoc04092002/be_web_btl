@@ -4,8 +4,11 @@ package ttcs.btl.controller.auth;
 import io.jsonwebtoken.Claims;
 import jakarta.mail.MessagingException;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.web.bind.annotation.*;
+import ttcs.btl.dto.auth.ResetPasswordRequest;
 import ttcs.btl.model.client.EWaitingR;
 import ttcs.btl.service.auth.TokenProvider;
 import ttcs.btl.service.email.EmailService;
@@ -32,6 +35,11 @@ public class ForgotPassword {
     @GetMapping("get-all-ewaitingr")
     public List<EWaitingR> getAllEWaitingR() {
         return emailService.getAllEWaitingR();
+    }
+
+    @PostMapping("access-reset")
+    public Boolean accessResetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest){
+        return emailService.accessResetPassword(resetPasswordRequest);
     }
 
     @PostMapping("delete-forgotpass-ids")

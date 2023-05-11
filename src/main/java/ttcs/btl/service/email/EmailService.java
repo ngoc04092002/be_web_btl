@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ttcs.btl.dto.auth.ResetPasswordRequest;
 import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.model.client.EWaitingR;
 import ttcs.btl.repository.clients.IClientRepo;
@@ -72,16 +73,29 @@ public class EmailService {
 
             if(isExistEmailCLient == null ||isEmailExistEWR.isEmpty()){
                 throw new ArgumentException("Cảnh báo!!");
-            }else{
-                isExistEmailCLient.setPassword(passwordEncoder.encode("12345678A@"));
-                iewrRepo.deleteByEmail(email);
-                iClientRepo.save(isExistEmailCLient);
             }
+
         }catch (ArgumentException argumentException){
             throw new ArgumentException("Cảnh báo!!");
         }
 
         return "success";
+    }
+
+    public Boolean accessResetPassword(ResetPasswordRequest resetPasswordRequest){
+        try {
+            Claims claims = tokenProvider.decodeJwt(resetPasswordRequest.getEmail());
+            final String decodeEmail = claims.getSubject();
+            final var isExistEmailCLient = iClientRepo.findByEmail(decodeEmail);
+
+            isExistEmailCLient.setPassword(passwordEncoder.encode(resetPasswordRequest.getPassword()));
+            iewrRepo.deleteByEmail(decodeEmail);
+            iClientRepo.save(isExistEmailCLient);
+            return true;
+        }catch (Exception ex){
+            System.out.println("EmailService=>>>>"+ex.getMessage());
+            return false;
+        }
     }
 
     public List<EWaitingR> getAllEWaitingR(){
