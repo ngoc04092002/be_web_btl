@@ -1,6 +1,7 @@
 package ttcs.btl.model.client;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,6 +13,7 @@ import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.model.news.NewsEntity;
 import ttcs.btl.model.postRoom.PostRoomEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +24,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
-public class ClientEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class ClientEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -91,7 +94,7 @@ public class ClientEntity {
     private List<QAEntity> qaEntities;
 
     @JsonBackReference(value = "client_comment")
-    @OneToMany(mappedBy = "clientEntityComment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clientComment", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
     @JsonBackReference(value = "client_bill")

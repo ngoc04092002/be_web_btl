@@ -3,7 +3,7 @@ package ttcs.btl.service.comments;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ttcs.btl.model.comments.CommentsEntity;
-import ttcs.btl.repository.Comments.ICommentsRepo;
+import ttcs.btl.repository.comments.ICommentsRepo;
 
 import java.util.List;
 

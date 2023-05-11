@@ -1,9 +1,11 @@
 package ttcs.btl.model.QAEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import ttcs.btl.model.client.ClientEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,7 +13,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikesQAEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class LikesQAEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long like_id;
@@ -28,7 +31,4 @@ public class LikesQAEntity {
         createdAt = LocalDateTime.now();
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_qas_likes_id", referencedColumnName = "id")
-    private QAEntity likesQAEntity;
 }

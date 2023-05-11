@@ -1,5 +1,7 @@
 package ttcs.btl.model.comments;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.model.client.ClientEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,13 +19,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentsEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class CommentsEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "commentsEntity", cascade = CascadeType.ALL)
-    private List<LikeCommentEntity> likes;
 
     @Column(name = "content")
     private String content;
@@ -35,12 +36,12 @@ public class CommentsEntity {
         createdAt = LocalDateTime.now();
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_comments_id", referencedColumnName = "id")
-    private QAEntity qaEntityComment;
+    @JsonBackReference(value = "qa_comment")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_qa-comment_id", referencedColumnName = "id")
+    private QAEntity qaEntity;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_client_comment_id", referencedColumnName = "id")
-    private ClientEntity clientEntityComment;
+    private ClientEntity clientComment;
 }

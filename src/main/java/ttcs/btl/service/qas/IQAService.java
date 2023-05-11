@@ -8,6 +8,8 @@ public interface IQAService {
 
     List<QAEntity> getAllQA();
 
-    QAEntity saveQA(QAEntity qaEntity);
+    List<QAEntity> filterQA(String s,Integer limit, Integer offset);
+
+    Boolean saveQA(QAEntity qaEntity);
     String deleteQA(Long id);
 }

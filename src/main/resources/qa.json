@@ -2,13 +2,13 @@
   "img": "https://media.timeout.com/images/105241469/image.jpg",
   "content": "name",
   "clientEntityQa":{
-    "avatar": "",
-    "username": "test1",
-    "email":"test1@gmail.com",
-    "address":"test1",
-    "gender": "female",
-    "sdt":"0123456789",
-    "password":"123456789",
-    "role": "user"
+    "address":"aa",
+    "avatar":"https://firebasestorage.googleapis.com/v0/b/website-rent-house.appspot.com/o/images%2Fmaxresdefault.jpgc03f8bfa-4696-4386-93b8-44430a55519c?alt=media&token=5f42544d-7642-49b6-96d0-bd3c0d108f12",
+    "email":"user1@gmail.com",
+    "gender":"male",
+    "id":2,
+    "role":"user",
+    "sdt":"0338787233",
+    "username":"user1"
   }
 }

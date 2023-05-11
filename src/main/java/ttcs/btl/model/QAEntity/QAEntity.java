@@ -1,13 +1,19 @@
 package ttcs.btl.model.QAEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.model.comments.CommentsEntity;
 import ttcs.btl.model.news.NewsEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,25 +22,28 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QAEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class QAEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="content")
+    @Column(name="content",columnDefinition = "text")
     private String content;
 
-    @Column(name = "img")
+    @Column(name = "img",columnDefinition = "text")
     private String img;
 
-    @OneToMany(mappedBy = "likesQAEntity", cascade = CascadeType.ALL)
+    @OneToMany
     private  List<LikesQAEntity> likes;
 
-    @OneToMany(mappedBy = "qaEntityComment", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "qa_comment")
+    @OneToMany(mappedBy = "qaEntity", cascade = CascadeType.ALL)
     private List<CommentsEntity> commentsEntities;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_qa_client_id", referencedColumnName = "id")
     private ClientEntity clientEntityQa;
 
