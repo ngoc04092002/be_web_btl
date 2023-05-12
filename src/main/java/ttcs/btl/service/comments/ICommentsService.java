@@ -9,7 +9,7 @@ import java.util.List;
 public interface ICommentsService {
     List<CommentsEntity> getAllComments();
 
-    Boolean saveComment(CommentsEntity commentsEntity);
+    CommentsEntity saveComment(CommentsEntity commentsEntity);
     String deleteComment(Long id);
 
     CommentChild createCommentChild(CommentChild commentChild);

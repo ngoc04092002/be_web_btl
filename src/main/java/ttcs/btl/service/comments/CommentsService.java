@@ -21,13 +21,8 @@ public class CommentsService implements ICommentsService{
     }
 
     @Override
-    public Boolean saveComment(CommentsEntity commentsEntity) {
-        try {
-            iCommentsRepo.save(commentsEntity);
-            return true;
-        }catch (Exception e) {
-            return false;
-        }
+    public CommentsEntity saveComment(CommentsEntity commentsEntity) {
+            return iCommentsRepo.save(commentsEntity);
     }
 
     @Override
