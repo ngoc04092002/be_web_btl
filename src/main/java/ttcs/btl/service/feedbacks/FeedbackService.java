@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ttcs.btl.dto.feedbacks.FeedbackReportInfo;
 import ttcs.btl.dto.feedbacks.FeedbackRepostAmount;
 import ttcs.btl.dto.feedbacks.FeedbackResponse;
+import ttcs.btl.model.feedbacks.ClientFeedbackEntity;
 import ttcs.btl.model.feedbacks.FeedbackEntity;
+import ttcs.btl.repository.feedbacks.IClientFeedbackRepo;
 import ttcs.btl.repository.feedbacks.IFeedbackRepo;
 
 import java.util.ArrayList;
@@ -18,11 +20,32 @@ import java.util.List;
 public class FeedbackService implements IFeedbackService {
 
     private final IFeedbackRepo iFeedbackRepo;
+    private final IClientFeedbackRepo iClientFeedbackRepo;
 
     @Override
     public Boolean saveFeedback(FeedbackEntity feedbackEntity) {
-        iFeedbackRepo.save(feedbackEntity);
-        return true;
+        try{
+            iFeedbackRepo.save(feedbackEntity);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+
+    }
+
+    @Override
+    public Boolean saveClientFeedback(ClientFeedbackEntity clientFeedbackEntity) {
+        try{
+            iClientFeedbackRepo.save(clientFeedbackEntity);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
+    @Override
+    public List<ClientFeedbackEntity> getClientFeedbackById(Long id) {
+        return iClientFeedbackRepo.getAllByClientId(id);
     }
 
     @Override
