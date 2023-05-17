@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IClientFeedbackRepo extends JpaRepository<ClientFeedbackEntity,Long> {
     List<ClientFeedbackEntity> getAllByClientId(Long id);
+
+    void deleteById(Long id);
 }

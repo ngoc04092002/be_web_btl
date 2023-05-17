@@ -59,6 +59,11 @@ public class FeedbackService implements IFeedbackService {
     }
 
     @Override
+    public void deleteClientFeedbackById(Long id) {
+        iClientFeedbackRepo.deleteById(id);
+    }
+
+    @Override
     public FeedbackReportInfo countFeedbackByTypeAndMonth() {
         List<FeedbackResponse> smile = new ArrayList<>();
         List<FeedbackResponse> meh = new ArrayList<>();

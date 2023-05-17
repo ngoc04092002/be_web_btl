@@ -51,4 +51,15 @@ public class FeedbackController {
         }
 
     }
+
+    @DeleteMapping("delete-client-feedback/{id}")
+    public Boolean deleteClientFeedback(@PathVariable Long id) {
+        try {
+            iFeedbackService.deleteClientFeedbackById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
 }

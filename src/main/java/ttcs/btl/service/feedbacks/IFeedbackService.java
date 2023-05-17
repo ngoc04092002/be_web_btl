@@ -17,5 +17,7 @@ public interface IFeedbackService {
 
     void deleteFeedbacksWithIds(List<Long> ids);
 
+    void deleteClientFeedbackById(Long id);
+
     FeedbackReportInfo countFeedbackByTypeAndMonth();
 }
