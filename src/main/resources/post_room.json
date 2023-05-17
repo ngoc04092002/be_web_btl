@@ -1,6 +1,6 @@
 {
   "title": "test",
-  "src": [{"src":"https"}],
+  "src": [{"src":"https"}, {"src":"www"}],
   "address": "hn",
   "phone": "123",
   "price": "24",

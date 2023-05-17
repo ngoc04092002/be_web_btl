@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/api/v1/**")
-                .allowedOrigins(environmentConfig.getCorsEndPoint().toArray(String[]::new))
+                .allowedOriginPatterns(environmentConfig.getCorsEndPoint().toArray(String[]::new))
                 .allowCredentials(true)
                 .allowedHeaders("*")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE");
