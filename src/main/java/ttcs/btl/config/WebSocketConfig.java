@@ -19,13 +19,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //group
         config.setApplicationDestinationPrefixes("/send");
         //private
-        config.setUserDestinationPrefix("/user");
+//        config.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // websocket
-        registry.addEndpoint("/ws")
+        registry.addEndpoint("/websocket")
                 .setAllowedOriginPatterns(environmentConfig.getCorsEndPoint().toArray(String[]::new))
                 .withSockJS();
     }

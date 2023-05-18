@@ -47,3 +47,11 @@ app:
     tokenSecret: key_privateakshdjasd129p8u91p8j$@
     claimName: roleCode
 
+#ws
+logging:
+  level:
+    org:
+      springframework:
+        messaging: trace
+        web:
+          socket: trace
