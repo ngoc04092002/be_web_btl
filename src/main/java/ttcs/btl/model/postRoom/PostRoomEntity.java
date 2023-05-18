@@ -57,6 +57,9 @@ public class PostRoomEntity implements Serializable {
     @Column(name = "bathroom", nullable = false)
     private String bathroom;
 
+    @Column(name = "status")
+    private Boolean status;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -64,9 +67,7 @@ public class PostRoomEntity implements Serializable {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.ALL)
-    private BillEntity billEntity;
+
     @ManyToOne
     @JoinColumn(name = "fk_client_post_room_id", referencedColumnName = "id")
     private ClientEntity clientEntityPostRoom;

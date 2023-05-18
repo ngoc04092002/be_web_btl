@@ -19,8 +19,8 @@ public class BillsController {
     }
     private final IBillService iBillService;
     @GetMapping("get-all-bills")
-    public List<BillsResponse> getAllBills(){
-        List<BillEntity> allBills = iBillService.getAllBills();
+    public List<BillsResponse> getAllBills(@RequestParam Long id){
+        List<BillEntity> allBills = iBillService.getAllBills(id);
         return allBills.stream().map(this::billsResponse).toList();
     }
 

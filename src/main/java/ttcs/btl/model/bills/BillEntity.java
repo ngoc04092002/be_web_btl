@@ -1,18 +1,21 @@
 package ttcs.btl.model.bills;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import ttcs.btl.model.postRoom.PostRoomEntity;
 import ttcs.btl.model.client.ClientEntity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bills")
 @Data
-public class BillEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class BillEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,8 +26,9 @@ public class BillEntity {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "deposit")
-    private String deposit;
+    @Column(name = "room_id")
+    private Long rid;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @PrePersist
@@ -32,9 +36,6 @@ public class BillEntity {
         createdAt = LocalDateTime.now();
     }
 
-    @JsonManagedReference
-    @OneToOne(mappedBy = "billEntity")
-    private PostRoomEntity postRoomEntity;
     @ManyToOne
     @JoinColumn(name = "fk_bill_client_id", referencedColumnName = "id")
     private ClientEntity clientEntityBill;

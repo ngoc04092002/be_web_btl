@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ttcs.btl.model.bills.BillEntity;
 import ttcs.btl.model.client.ClientEntity;
+import ttcs.btl.model.postRoom.PostRoomEntity;
 import ttcs.btl.repository.bills.IBillRepo;
 import ttcs.btl.repository.clients.IClientRepo;
+import ttcs.btl.repository.postRoom.IPostRoomRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,23 +18,24 @@ import java.util.Optional;
 public class BillService implements IBillService {
     private final IBillRepo iBillRepo;
 
-    private final IClientRepo iClientRepo;
+
+    private final IPostRoomRepo iPostRoomRepo;
 
     @Override
-    public List<BillEntity> getAllBills() {
-        return iBillRepo.findAll();
+    public List<BillEntity> getAllBills(Long id) {
+        return iBillRepo.getAllByClientEntityBill_Id(id);
     }
 
     @Override
     public Boolean saveBill(BillEntity billEntity) {
-        Optional<ClientEntity> clientEntityOptional = iClientRepo.findById(billEntity.getClientEntityBill()
-                                                                                   .getId());
-        if (clientEntityOptional.isPresent()) {
-            ClientEntity clientEntity = clientEntityOptional.get();
-            billEntity.setClientEntityBill(clientEntity);
+        try{
             iBillRepo.save(billEntity);
             return true;
+        }catch (Exception e){
+
+            System.out.println("bill==>"+e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }

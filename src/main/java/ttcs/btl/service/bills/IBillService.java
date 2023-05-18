@@ -6,7 +6,7 @@ import ttcs.btl.model.bills.BillEntity;
 import java.util.List;
 
 public interface IBillService {
-    List<BillEntity> getAllBills();
+    List<BillEntity> getAllBills(Long id);
     Boolean saveBill(BillEntity billEntity);
 
 }
