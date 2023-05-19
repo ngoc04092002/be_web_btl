@@ -1,25 +1,17 @@
 package ttcs.btl.service.bills;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ttcs.btl.model.bills.BillEntity;
-import ttcs.btl.model.client.ClientEntity;
-import ttcs.btl.model.postRoom.PostRoomEntity;
 import ttcs.btl.repository.bills.IBillRepo;
-import ttcs.btl.repository.clients.IClientRepo;
-import ttcs.btl.repository.postRoom.IPostRoomRepo;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BillService implements IBillService {
     private final IBillRepo iBillRepo;
 
-
-    private final IPostRoomRepo iPostRoomRepo;
 
     @Override
     public List<BillEntity> getAllBills(Long id) {
@@ -36,6 +28,19 @@ public class BillService implements IBillService {
             System.out.println("bill==>"+e.getMessage());
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public Boolean deleteBill(Long id) {
+        try{
+            iBillRepo.deleteById(id);
+            return true;
+        }catch (Exception ex){
+            System.out.println("delete bill====>"+ex.getMessage());
+            ex.printStackTrace();
+            return false;
+
         }
     }
 }

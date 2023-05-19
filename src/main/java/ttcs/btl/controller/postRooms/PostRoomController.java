@@ -33,13 +33,23 @@ public class PostRoomController {
         return iPostRoomService.filterPostRoom(limit, offset, s,address, type, price, acreage, numberRoom, time);
     }
 
+    @GetMapping("get-post_room-user")
+    public List<PostRoomEntity> getAllPostRoomOfUser(@RequestParam Long id){
+        return iPostRoomService.getAllPostRoomOfUser(id);
+    }
+
     @PostMapping("save-post-room")
     public Boolean savePostRoom(@RequestBody PostRoomEntity postRoomEntity) {
-        return iPostRoomService.saveNews(postRoomEntity);
+        return iPostRoomService.savePostRoom(postRoomEntity);
     }
 
     @PutMapping("update-post-room")
-    public Boolean updatePostRoom(@RequestBody PostRoomEntity postRoomEntity) {
-        return iPostRoomService.saveNews(postRoomEntity);
+    public PostRoomEntity updatePostRoom(@RequestBody PostRoomEntity postRoomEntity) {
+        return iPostRoomService.updatePostRoom(postRoomEntity);
+    }
+
+    @DeleteMapping("delete-post-room/{id}")
+    public Boolean deletePostRoom(@PathVariable Long id) {
+        return iPostRoomService.deletePostRoom(id);
     }
 }

@@ -80,7 +80,7 @@ public class PostRoomService implements IPostRoomService {
     }
 
     @Override
-    public Boolean saveNews(PostRoomEntity postRoomEntity) {
+    public Boolean savePostRoom(PostRoomEntity postRoomEntity) {
         try {
             iPostRoomRepo.save(postRoomEntity);
             return true;
@@ -91,8 +91,45 @@ public class PostRoomService implements IPostRoomService {
     }
 
     @Override
+    public Boolean deletePostRoom(Long id) {
+        try {
+            iPostRoomRepo.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
     public PostRoomEntity getPostRoomById(Long id) {
         return iPostRoomRepo.getById(id);
+    }
+
+    @Override
+    public PostRoomEntity updatePostRoom(PostRoomEntity postRoomEntity) {
+        final var postRoom = iPostRoomRepo.getById(postRoomEntity.getId());
+        postRoom.setStatus(postRoomEntity.getStatus());
+        postRoom.setSale(postRoomEntity.getSale());
+        postRoom.setBedRoom(postRoomEntity.getBedRoom());
+        postRoom.setClientEntityPostRoom(postRoomEntity.getClientEntityPostRoom());
+        postRoom.setRoomType(postRoomEntity.getRoomType());
+        postRoom.setAcreage(postRoomEntity.getAcreage());
+        postRoom.setAddress(postRoomEntity.getAddress());
+        postRoom.setBathroom(postRoomEntity.getBathroom());
+        postRoom.setDes(postRoomEntity.getDes());
+        postRoom.setLimitNumberPeople(postRoomEntity.getLimitNumberPeople());
+        postRoom.setPhone(postRoomEntity.getPhone());
+        postRoom.setPrice(postRoomEntity.getPrice());
+        postRoom.setSrc(postRoomEntity.getSrc());
+        postRoom.setTitle(postRoomEntity.getTitle());
+
+        return iPostRoomRepo.save(postRoom);
+    }
+
+    @Override
+    public List<PostRoomEntity> getAllPostRoomOfUser(Long id) {
+        return iPostRoomRepo.getAllByClientEntityPostRoom_Id(id);
     }
 
     private List<PostRoomEntity> getPostRoomEntitiesContainNotNull(String filter, List<PostRoomEntity> postRooms) {

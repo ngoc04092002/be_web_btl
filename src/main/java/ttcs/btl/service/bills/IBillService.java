@@ -9,4 +9,6 @@ public interface IBillService {
     List<BillEntity> getAllBills(Long id);
     Boolean saveBill(BillEntity billEntity);
 
+    Boolean deleteBill(Long id);
+
 }
