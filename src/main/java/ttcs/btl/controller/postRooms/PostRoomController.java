@@ -2,6 +2,7 @@ package ttcs.btl.controller.postRooms;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ttcs.btl.dto.postRoom.PostRoomResponse;
 import ttcs.btl.model.postRoom.PostRoomEntity;
 import ttcs.btl.service.postRoom.IPostRoomService;
 
@@ -19,6 +20,16 @@ public class PostRoomController {
         return iPostRoomService.getAllPostRoom();
     }
 
+    @GetMapping("get-post_room-report")
+    public PostRoomResponse getPostRoomReport(@RequestParam Long id) {
+        return iPostRoomService.getPostRoomReport(id);
+    }
+
+    @GetMapping("get-post_room-amount")
+    public List<Float> getPostRoomAmountByMonth(@RequestParam Long id) {
+        return iPostRoomService.getPostRoomAmountByMonth(id);
+    }
+
     @GetMapping("room-item/{id}")
     public PostRoomEntity getPostRoomById(@PathVariable Long id) {
         return iPostRoomService.getPostRoomById(id);
@@ -30,11 +41,11 @@ public class PostRoomController {
             @RequestParam(required = false) String address, @RequestParam(required = false) String type,
             @RequestParam(required = false) String price, @RequestParam(required = false) String acreage,
             @RequestParam(required = false) String numberRoom, @RequestParam(required = false) String time) {
-        return iPostRoomService.filterPostRoom(limit, offset, s,address, type, price, acreage, numberRoom, time);
+        return iPostRoomService.filterPostRoom(limit, offset, s, address, type, price, acreage, numberRoom, time);
     }
 
     @GetMapping("get-post_room-user")
-    public List<PostRoomEntity> getAllPostRoomOfUser(@RequestParam Long id){
+    public List<PostRoomEntity> getAllPostRoomOfUser(@RequestParam Long id) {
         return iPostRoomService.getAllPostRoomOfUser(id);
     }
 

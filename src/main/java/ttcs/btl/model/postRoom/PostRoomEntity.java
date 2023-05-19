@@ -1,13 +1,11 @@
 package ttcs.btl.model.postRoom;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ttcs.btl.model.bills.BillEntity;
 import ttcs.btl.model.client.ClientEntity;
 
 import java.io.Serializable;

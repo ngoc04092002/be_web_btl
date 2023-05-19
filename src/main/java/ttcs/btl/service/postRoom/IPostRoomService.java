@@ -1,6 +1,7 @@
 package ttcs.btl.service.postRoom;
 
 
+import ttcs.btl.dto.postRoom.PostRoomResponse;
 import ttcs.btl.model.postRoom.PostRoomEntity;
 
 import java.util.List;
@@ -9,6 +10,11 @@ public interface IPostRoomService {
     Boolean savePostRoom(PostRoomEntity postRoomEntity);
 
     Boolean deletePostRoom(Long id);
+
+    PostRoomResponse getPostRoomReport(Long id);
+
+    List<Float> getPostRoomAmountByMonth(Long userId
+    );
 
     PostRoomEntity getPostRoomById(Long id);
 

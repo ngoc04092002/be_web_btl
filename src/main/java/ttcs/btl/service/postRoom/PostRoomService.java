@@ -3,12 +3,16 @@ package ttcs.btl.service.postRoom;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import ttcs.btl.dto.postRoom.PostRoomReport;
+import ttcs.btl.dto.postRoom.PostRoomResponse;
 import ttcs.btl.model.postRoom.PostRoomEntity;
 import ttcs.btl.repository.postRoom.IPostRoomRepo;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,6 +106,82 @@ public class PostRoomService implements IPostRoomService {
     }
 
     @Override
+    public PostRoomResponse getPostRoomReport(Long id) {
+        PostRoomReport totalRoom = new PostRoomReport();
+        PostRoomReport rented = new PostRoomReport();
+        PostRoomReport sales = new PostRoomReport();
+
+        final var postRooms = iPostRoomRepo.getAllByClientEntityPostRoom_Id(id);
+        totalRoom.setSales((float) postRooms.size());
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH) + 1; // current
+        int year = cal.get(Calendar.YEAR);
+        final var postRoomsBeforeMonth = postRooms.stream()
+                .filter(r -> {
+                    LocalDateTime local = LocalDateTime.parse(r.getCreatedAt()
+                                                                      .toString());
+                    int currentMonth = local.getMonthValue();
+                    int currentYear = local.getYear();
+                    return currentMonth == month - 1 && year == currentYear;
+                })
+                .toList();
+
+        totalRoom.setDevelopSpeed(postRooms.size() - postRoomsBeforeMonth.size() + " Phòng");
+        totalRoom.setIncrement(true);
+
+        final var rentCurrentMonth = postRooms.stream()
+                .filter(r -> {
+                    LocalDateTime local = LocalDateTime.parse(r.getCreatedAt()
+                                                                      .toString());
+                    int currentMonth = local.getMonthValue();
+                    int currentYear = local.getYear();
+                    return currentMonth == month && !r.getStatus() && currentYear == year;
+                })
+                .toList();
+
+        final var rentBeforeMonth = postRooms.stream()
+                .filter(r -> {
+                    LocalDateTime local = LocalDateTime.parse(r.getCreatedAt()
+                                                                      .toString());
+                    int currentMonth = local.getMonthValue();
+                    int currentYear = local.getYear();
+                    return currentMonth == month - 1 && !r.getStatus() && currentYear == year;
+                })
+                .toList();
+
+        rented.setSales((float) (rentCurrentMonth.size()));
+        float developSpeed = (rentCurrentMonth.size() - rentBeforeMonth.size()) / (rentBeforeMonth.size() == 0 ? rentCurrentMonth.size() == 0 ? 1 : rentCurrentMonth.size() : rentBeforeMonth.size());
+        rented.setDevelopSpeed(Math.abs(developSpeed) * 100 + "%");
+        rented.setIncrement(developSpeed < 0 ? false : true);
+
+        float currentSales = getSalesMonthly(postRooms, month, year);
+        float beforeSales = getSalesMonthly(postRooms, month - 1, year);
+        float salesDevelopSpeed = (currentSales - beforeSales) / (beforeSales == 0 ? currentSales == 0 ? 1 : currentSales : beforeSales);
+        sales.setSales(currentSales);
+        sales.setDevelopSpeed(Math.abs(salesDevelopSpeed * 100) + "%");
+        sales.setIncrement(salesDevelopSpeed < 0 ? false : true);
+
+        return new PostRoomResponse(totalRoom, rented, sales);
+    }
+
+    @Override
+    public List<Float> getPostRoomAmountByMonth(Long userId) {
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        List<Float> monthsData = new ArrayList<Float>();
+        final var postRooms = iPostRoomRepo.getAllByClientEntityPostRoom_Id(userId);
+        for (int i = 1; i <= 12; i++) {
+            float price = getSalesMonthly(postRooms, i, year);
+            monthsData.add(price);
+        }
+        return monthsData;
+    }
+
+    @Override
     public PostRoomEntity getPostRoomById(Long id) {
         return iPostRoomRepo.getById(id);
     }
@@ -166,5 +246,19 @@ public class PostRoomService implements IPostRoomService {
                     .toList();
         }
         return postRooms;
+    }
+
+    private Float getSalesMonthly(List<PostRoomEntity> postRooms, int month, int year) {
+        float currentSales = 0;
+        for (PostRoomEntity p : postRooms) {
+            LocalDateTime local = LocalDateTime.parse(p.getCreatedAt()
+                                                              .toString());
+            int currentMonth = local.getMonthValue();
+            int currentYear = local.getYear();
+            if (currentMonth == month && currentYear == year) {
+                currentSales += Float.parseFloat(p.getPrice());
+            }
+        }
+        return currentSales;
     }
 }
