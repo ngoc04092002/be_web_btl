@@ -3,6 +3,7 @@ package ttcs.btl.service.qas;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ttcs.btl.dto.qas.QAUpdateRequest;
 import ttcs.btl.model.QAEntity.LikesQAEntity;
 import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.repository.qas.ILikesQARepo;
@@ -19,8 +20,13 @@ public class QAService implements IQAService {
     private final ILikesQARepo iLikesQARepo;
 
     @Override
-    public List<QAEntity> getAllQA() {
-        return iqaRepo.findAll();
+    public List<QAEntity> getAllQA(Boolean report) {
+        return iqaRepo.getAllByReport(report);
+    }
+
+    @Override
+    public List<QAEntity> getAllQAByUser(Long id) {
+        return iqaRepo.getAllByClientEntityQa_Id(id);
     }
 
     @Override
@@ -42,9 +48,29 @@ public class QAService implements IQAService {
     }
 
     @Override
-    public String deleteQA(Long id) {
-        iqaRepo.deleteById(id);
-        return "delete successfully";
+    public Boolean updateQA(QAUpdateRequest qaUpdateRequest) {
+        try {
+            final var qa = iqaRepo.getById(qaUpdateRequest.getId());
+            qa.setReport(qaUpdateRequest.getReport());
+            return true;
+        } catch (Exception e) {
+            System.out.println("update qa====>" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
+    public Boolean deleteQA(Long id) {
+        try {
+            iqaRepo.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println("deleta qa===>" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -69,7 +95,8 @@ public class QAService implements IQAService {
             iLikesQARepo.save(likesQAEntity);
             return amountLike + 1;
         }
-        iLikesQARepo.deleteByClientLikeEntitiesAndQaEntity(likesQAEntity.getClientLikeEntities(), likesQAEntity.getQaEntity());
+        iLikesQARepo.deleteByClientLikeEntitiesAndQaEntity(likesQAEntity.getClientLikeEntities(),
+                                                           likesQAEntity.getQaEntity());
         return amountLike - 1;
     }
 }

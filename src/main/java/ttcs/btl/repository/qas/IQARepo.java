@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface IQARepo extends JpaRepository<QAEntity, Long> {
 
+    List<QAEntity> getAllByClientEntityQa_Id(Long id);
+
+    List<QAEntity> getAllByReport(Boolean report);
+    QAEntity getById(Long id);
+
+    void deleteById(Long id);
 
     @Modifying
     @Query(nativeQuery = true, value = "select * from qas where content like CONCAT('%',:s,'%') order by created_at DESC " + "limit " +
