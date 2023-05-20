@@ -153,14 +153,14 @@ public class PostRoomService implements IPostRoomService {
 
         rented.setSales((float) (rentCurrentMonth.size()));
         float developSpeed = (rentCurrentMonth.size() - rentBeforeMonth.size()) / (rentBeforeMonth.size() == 0 ? rentCurrentMonth.size() == 0 ? 1 : rentCurrentMonth.size() : rentBeforeMonth.size());
-        rented.setDevelopSpeed(Math.abs(developSpeed) * 100 + "%");
+        rented.setDevelopSpeed(String. format("%.2f", Math.abs(developSpeed * 100))+"%");
         rented.setIncrement(developSpeed < 0 ? false : true);
 
         float currentSales = getSalesMonthly(postRooms, month, year);
         float beforeSales = getSalesMonthly(postRooms, month - 1, year);
         float salesDevelopSpeed = (currentSales - beforeSales) / (beforeSales == 0 ? currentSales == 0 ? 1 : currentSales : beforeSales);
         sales.setSales(currentSales);
-        sales.setDevelopSpeed(Math.abs(salesDevelopSpeed * 100) + "%");
+        sales.setDevelopSpeed(String. format("%.2f", Math.abs(salesDevelopSpeed * 100))+"%");
         sales.setIncrement(salesDevelopSpeed < 0 ? false : true);
 
         return new PostRoomResponse(totalRoom, rented, sales);
@@ -229,7 +229,7 @@ public class PostRoomService implements IPostRoomService {
             Matcher m = pt.matcher(price);
             boolean isGreater = price.startsWith(">");
             while (m.find()) {
-                lis.add(Integer.parseInt(m.group()));
+                lis.add(Integer.parseInt(m.group())*1000000); //triệu
             }
             postRooms = postRooms.stream()
                     .filter(p -> {
