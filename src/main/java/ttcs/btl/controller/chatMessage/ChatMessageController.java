@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import ttcs.btl.dto.chatMessage.ChatMessageResponse;
+import ttcs.btl.model.QAEntity.QAEntity;
 import ttcs.btl.model.chatMessage.ChatMessageModal;
 import ttcs.btl.repository.error.ArgumentException;
 import ttcs.btl.service.chatMessage.IChatMessageService;
@@ -20,7 +21,7 @@ public class ChatMessageController {
     private final IChatMessageService iChatMessageService;
 
     @GetMapping("get-msg")
-    public List<ChatMessageResponse> getRidMessages(@RequestParam String rid){
+    public List<ChatMessageModal> getRidMessages(@RequestParam String rid){
         return iChatMessageService.getRidMessages(rid);
     }
 

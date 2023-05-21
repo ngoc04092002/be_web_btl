@@ -3,9 +3,7 @@ package ttcs.btl.service.chatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ttcs.btl.dto.chatMessage.ChatMessageResponse;
-import ttcs.btl.dto.clients.ClientResponse;
 import ttcs.btl.model.chatMessage.ChatMessageModal;
-import ttcs.btl.model.client.ClientEntity;
 import ttcs.btl.repository.chatMessage.IChatMessageRepo;
 
 import java.util.List;
@@ -20,9 +18,9 @@ public class ChatMessageService implements IChatMessageService{
     }
 
     @Override
-    public List<ChatMessageResponse> getRidMessages(String rid) {
+    public List<ChatMessageModal> getRidMessages(String rid) {
         final var msgs = iChatMessageRepo.getByRid(rid);
-        return msgs.stream().map(this::chatMessageResponse).toList();
+        return msgs;
     }
 
     private ChatMessageResponse chatMessageResponse(ChatMessageModal chatMessageModal) {
