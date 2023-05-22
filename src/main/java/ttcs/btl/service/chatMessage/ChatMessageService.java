@@ -23,6 +23,11 @@ public class ChatMessageService implements IChatMessageService{
         return msgs;
     }
 
+    @Override
+    public List<ChatMessageModal> getAllUsersChatMessageTo(String to) {
+        return iChatMessageRepo.findByUsersAndFromTo(to);
+    }
+
     private ChatMessageResponse chatMessageResponse(ChatMessageModal chatMessageModal) {
         return new ChatMessageResponse(chatMessageModal);
     }

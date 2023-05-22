@@ -10,4 +10,6 @@ public interface IChatMessageService {
     ChatMessageModal saveMessage(ChatMessageModal chatMessageModal);
 
     List<ChatMessageModal> getRidMessages(String rid);
+
+    List<ChatMessageModal> getAllUsersChatMessageTo(String to);
 }

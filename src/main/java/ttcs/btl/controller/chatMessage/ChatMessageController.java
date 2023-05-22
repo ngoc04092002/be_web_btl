@@ -25,4 +25,9 @@ public class ChatMessageController {
         return iChatMessageService.getRidMessages(rid);
     }
 
+    @GetMapping("get-users")
+    public List<ChatMessageModal> getAllUsersChatMessageTo(@RequestParam String to){
+        return iChatMessageService.getAllUsersChatMessageTo(to);
+    }
+
 }
