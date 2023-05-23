@@ -11,6 +11,8 @@ import java.util.List;
 public interface IChatMessageRepo extends MongoRepository<ChatMessageModal, String> {
     List<ChatMessageModal> getByRid(String rid);
 
+    void deleteById(String id);
+
     @Aggregation(
             pipeline = {
                     "{$match: {to: ?0}}",

@@ -18,5 +18,9 @@ public interface IPostRoomRepo extends JpaRepository<PostRoomEntity, Long> {
 
     List<PostRoomEntity> getAllByClientEntityPostRoom_Id(Long id);
 
+    @Modifying
+    @Query("select p.id from PostRoomEntity p")
+    List<Long> getIds();
+
     List<PostRoomEntity> getAllByTitleContainsIgnoreCaseOrDesContainsIgnoreCaseOrAddressContainsIgnoreCase(String title, String des, String address);
 }

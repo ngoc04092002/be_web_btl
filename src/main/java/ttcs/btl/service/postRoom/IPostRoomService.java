@@ -16,6 +16,8 @@ public interface IPostRoomService {
     List<Float> getPostRoomAmountByMonth(Long userId
     );
 
+    List<Long> getIds();
+
     PostRoomEntity getPostRoomById(Long id);
 
     PostRoomEntity updatePostRoom(PostRoomEntity postRoomEntity);

@@ -30,6 +30,11 @@ public class PostRoomController {
         return iPostRoomService.getPostRoomAmountByMonth(id);
     }
 
+    @GetMapping("get-ids")
+    public List<Long> getIds() {
+        return iPostRoomService.getIds();
+    }
+
     @GetMapping("room-item/{id}")
     public PostRoomEntity getPostRoomById(@PathVariable Long id) {
         return iPostRoomService.getPostRoomById(id);

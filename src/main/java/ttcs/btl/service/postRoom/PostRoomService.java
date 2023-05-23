@@ -182,6 +182,11 @@ public class PostRoomService implements IPostRoomService {
     }
 
     @Override
+    public List<Long> getIds() {
+        return iPostRoomRepo.getIds();
+    }
+
+    @Override
     public PostRoomEntity getPostRoomById(Long id) {
         return iPostRoomRepo.getById(id);
     }
