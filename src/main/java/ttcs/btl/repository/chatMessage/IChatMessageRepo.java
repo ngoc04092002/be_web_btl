@@ -13,8 +13,10 @@ public interface IChatMessageRepo extends MongoRepository<ChatMessageModal, Stri
 
     @Aggregation(
             pipeline = {
-                    "{$match: {to: ?0}}"
+                    "{$match: {to: ?0}}",
+                    "{$project: {from: 1}}",
+                    "{$group: {_id: '$from'}}"
             }
     )
-    List<ChatMessageModal> findByUsersAndFromTo(String to);
+    List<String> findByUsersAndFromTo(String to);
 }

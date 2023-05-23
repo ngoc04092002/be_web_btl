@@ -26,7 +26,7 @@ public class ChatMessageController {
     }
 
     @GetMapping("get-users")
-    public List<ChatMessageModal> getAllUsersChatMessageTo(@RequestParam String to){
+    public List<ChatMessageResponse> getAllUsersChatMessageTo(@RequestParam String to){
         return iChatMessageService.getAllUsersChatMessageTo(to);
     }
 

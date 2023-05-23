@@ -1,9 +1,9 @@
 package ttcs.btl.dto.chatMessage;
 
-import ttcs.btl.model.chatMessage.ChatMessageModal;
+import ttcs.btl.model.client.ClientEntity;
 
-public record ChatMessageResponse(String from, String to, String msg) {
-    public ChatMessageResponse(ChatMessageModal chatMessageModal) {
-        this(chatMessageModal.getFrom(), chatMessageModal.getTo(), chatMessageModal.getMsg());
+public record ChatMessageResponse(Long id, String img, String username) {
+    public ChatMessageResponse(ClientEntity clientEntity) {
+        this(clientEntity.getId(), clientEntity.getAvatar(), clientEntity.getUsername());
     }
 }

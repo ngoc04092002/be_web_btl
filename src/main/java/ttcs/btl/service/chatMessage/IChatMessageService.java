@@ -11,5 +11,5 @@ public interface IChatMessageService {
 
     List<ChatMessageModal> getRidMessages(String rid);
 
-    List<ChatMessageModal> getAllUsersChatMessageTo(String to);
+    List<ChatMessageResponse> getAllUsersChatMessageTo(String to);
 }
