@@ -15,7 +15,7 @@ import java.util.Enumeration;
 public class AdminFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain) throws ServletException, IOException {
         // Kiểm tra quyền admin ở đây
 //        if (isAdmin(request)) {
 
@@ -23,13 +23,15 @@ public class AdminFilter extends OncePerRequestFilter {
 
         if (headerNames != null) {
             String token = request.getHeader("access-token");
-            String pathName = request.getLocalName();
-            System.out.println("Token==>" + token);
+            String location = request.getLocalName();
+            String pathName = request.getHeader("pathname");
+
+            System.out.println("Token==>" + token + "-" + location + "-" + pathName);
         }
 //        if (StringUtils.isNotBlank(token)) {
 
 
-            filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
 //        } else {
 //            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập.");
 //        }

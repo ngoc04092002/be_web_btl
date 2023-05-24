@@ -6,4 +6,5 @@ import ttcs.btl.model.comments.CommentChild;
 
 @Repository
 public interface ICommentChildRepo extends JpaRepository<CommentChild,Long> {
+    void deleteById(Long id);
 }

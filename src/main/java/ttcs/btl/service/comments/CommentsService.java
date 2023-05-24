@@ -11,10 +11,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommentsService implements ICommentsService{
+public class CommentsService implements ICommentsService {
 
     private final ICommentsRepo iCommentsRepo;
     private final ICommentChildRepo iCommentChildRepo;
+
     @Override
     public List<CommentsEntity> getAllComments() {
         return iCommentsRepo.findAll();
@@ -22,13 +23,31 @@ public class CommentsService implements ICommentsService{
 
     @Override
     public CommentsEntity saveComment(CommentsEntity commentsEntity) {
-            return iCommentsRepo.save(commentsEntity);
+        return iCommentsRepo.save(commentsEntity);
     }
 
     @Override
-    public String deleteComment(Long id) {
-        iCommentsRepo.deleteById(id);
-        return "delete successfully";
+    public Boolean deleteComment(Long id) {
+        try {
+            iCommentsRepo.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println("comments===>" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean deleteCommentChild(Long id) {
+        try {
+            iCommentChildRepo.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println("comments===>" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

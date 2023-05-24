@@ -10,7 +10,9 @@ public interface ICommentsService {
     List<CommentsEntity> getAllComments();
 
     CommentsEntity saveComment(CommentsEntity commentsEntity);
-    String deleteComment(Long id);
+    Boolean deleteComment(Long id);
+
+    Boolean deleteCommentChild(Long id);
 
     CommentChild createCommentChild(CommentChild commentChild);
 }

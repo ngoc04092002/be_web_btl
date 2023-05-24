@@ -36,8 +36,13 @@ public class CommentController {
     }
 
     @DeleteMapping("delete-comment/{id}")
-    public String deleteComment(@PathVariable("id") Long id) {
+    public Boolean deleteComment(@PathVariable("id") Long id) {
         return iCommentsService.deleteComment(id);
+    }
+
+    @DeleteMapping("delete-comment-child/{id}")
+    public Boolean deleteCommentChild(@PathVariable("id") Long id) {
+        return iCommentsService.deleteCommentChild(id);
     }
 
 }
