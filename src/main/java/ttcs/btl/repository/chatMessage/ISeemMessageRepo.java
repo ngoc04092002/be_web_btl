@@ -17,5 +17,5 @@ public interface ISeemMessageRepo extends MongoRepository<SeemModal,String> {
                     "{$match: {$and:[{rid: {$in: ?0}},{isRep: {$eq: true}}]}}",
             }
     )
-    SeemModal findMessageRep(List<String> rids);
+    List<SeemModal> findMessageRep(List<String> rids);
 }

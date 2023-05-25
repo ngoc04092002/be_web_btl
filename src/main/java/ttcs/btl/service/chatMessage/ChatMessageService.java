@@ -69,7 +69,7 @@ public class ChatMessageService implements IChatMessageService {
     public Boolean checkMissMessage(String userId) {
         final var rids = iChatMessageRepo.getRids(userId);
         final var userNotRep = iSeemMessageRepo.findMessageRep(rids);
-        if (userNotRep == null) {
+        if (userNotRep == null || userNotRep.size() == 0) {
             return false;
         }
         return true;
