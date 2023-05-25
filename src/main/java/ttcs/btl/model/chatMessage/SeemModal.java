@@ -4,19 +4,16 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Document(collection = "chatMessages")
-public class ChatMessageModal {
+@Document(collection = "seemMessage")
+public class SeemModal {
     @Id
     private String id;
-    private String from;
-    private String to;
-    private String msg;
-    private String rid;
 
+    private String rid;
+    private Boolean isRep;
 }

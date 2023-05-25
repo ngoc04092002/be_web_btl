@@ -21,4 +21,13 @@ public interface IChatMessageRepo extends MongoRepository<ChatMessageModal, Stri
             }
     )
     List<String> findByUsersAndFromTo(String to);
+
+    @Aggregation(
+            pipeline = {
+                    "{$match: {to: ?0}}",
+                    "{$project: {rid: 1}}",
+                    "{$group: {_id: '$rid'}}"
+            }
+    )
+    List<String> getRids(String to);
 }

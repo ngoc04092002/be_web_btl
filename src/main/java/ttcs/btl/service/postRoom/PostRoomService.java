@@ -44,12 +44,12 @@ public class PostRoomService implements IPostRoomService {
             postRooms = searchAllPostRooms(limit, offset, s);
         }
 
-        postRooms = getPostRoomEntitiesContainNotNull(address, postRooms);
-        postRooms = getPostRoomEntitiesContainNotNull(type, postRooms);
-        postRooms = getPostRoomEntitiesContainNotNull(numberRoom, postRooms);
+        postRooms = getPostRoomEntitiesContainNotNull("address", address, postRooms);
+        postRooms = getPostRoomEntitiesContainNotNull("type", type, postRooms);
+        postRooms = getPostRoomEntitiesContainNotNull("numberRoom", numberRoom, postRooms);
 
-        postRooms = getPostRoomEntitiesEstimate(price, postRooms);
-        postRooms = getPostRoomEntitiesEstimate(acreage, postRooms);
+        postRooms = getPostRoomEntitiesEstimate("price", price, postRooms);
+        postRooms = getPostRoomEntitiesEstimate("acreage", acreage, postRooms);
 
         if (StringUtils.isNotBlank(time)) {
             postRooms = postRooms.stream()
@@ -153,14 +153,14 @@ public class PostRoomService implements IPostRoomService {
 
         rented.setSales((float) (rentCurrentMonth.size()));
         float developSpeed = (rentCurrentMonth.size() - rentBeforeMonth.size()) / (rentBeforeMonth.size() == 0 ? rentCurrentMonth.size() == 0 ? 1 : rentCurrentMonth.size() : rentBeforeMonth.size());
-        rented.setDevelopSpeed(String. format("%.2f", Math.abs(developSpeed * 100))+"%");
+        rented.setDevelopSpeed(String.format("%.2f", Math.abs(developSpeed * 100)) + "%");
         rented.setIncrement(developSpeed < 0 ? false : true);
 
         float currentSales = getSalesMonthly(postRooms, month, year);
         float beforeSales = getSalesMonthly(postRooms, month - 1, year);
         float salesDevelopSpeed = (currentSales - beforeSales) / (beforeSales == 0 ? currentSales == 0 ? 1 : currentSales : beforeSales);
         sales.setSales(currentSales);
-        sales.setDevelopSpeed(String. format("%.2f", Math.abs(salesDevelopSpeed * 100))+"%");
+        sales.setDevelopSpeed(String.format("%.2f", Math.abs(salesDevelopSpeed * 100)) + "%");
         sales.setIncrement(salesDevelopSpeed < 0 ? false : true);
 
         return new PostRoomResponse(totalRoom, rented, sales);
@@ -217,39 +217,85 @@ public class PostRoomService implements IPostRoomService {
         return iPostRoomRepo.getAllByClientEntityPostRoom_Id(id);
     }
 
-    private List<PostRoomEntity> getPostRoomEntitiesContainNotNull(String filter, List<PostRoomEntity> postRooms) {
-        if (StringUtils.isNotBlank(filter)) {
-            postRooms = postRooms.stream()
-                    .filter(p -> p.getBedRoom()
-                            .contains(filter))
-                    .toList();
+    private List<PostRoomEntity> getPostRoomEntitiesContainNotNull(String type, String filter,
+            List<PostRoomEntity> postRooms) {
+        switch (type) {
+            case "address" -> {
+                if (StringUtils.isNotBlank(filter)) {
+                    postRooms = postRooms.stream()
+                            .filter(p -> p.getAddress()
+                                    .contains(filter))
+                            .toList();
+                }
+            }
+            case "type" -> {
+                if (StringUtils.isNotBlank(filter)) {
+                    postRooms = postRooms.stream()
+                            .filter(p -> p.getRoomType()
+                                    .contains(filter))
+                            .toList();
+                }
+            }
+            case "numberRoom" -> {
+                if (StringUtils.isNotBlank(filter)) {
+                    postRooms = postRooms.stream()
+                            .filter(p -> p.getBedRoom()
+                                    .contains(filter))
+                            .toList();
+                }
+            }
         }
+
         return postRooms;
     }
 
-    private List<PostRoomEntity> getPostRoomEntitiesEstimate(String price, List<PostRoomEntity> postRooms) {
+    private List<PostRoomEntity> getPostRoomEntitiesEstimate(String type, String price,
+            List<PostRoomEntity> postRooms) {
         if (StringUtils.isNotBlank(price)) {
             List<Integer> lis = new ArrayList<>();
             Pattern pt = Pattern.compile("\\d+");
             Matcher m = pt.matcher(price);
             boolean isGreater = price.startsWith(">");
-            while (m.find()) {
-                lis.add(Integer.parseInt(m.group())*1000000); //triệu
+            switch (type) {
+                case "price" -> {
+                    while (m.find()) {
+                        lis.add(Integer.parseInt(m.group()) * 1000000); //triệu
+                    }
+                    postRooms = postRooms.stream()
+                            .filter(p -> {
+                                if (lis.size() == 2) {
+                                    return Integer.parseInt(p.getPrice()) >= lis.get(0) && Integer.parseInt(
+                                            p.getPrice()) <= lis.get(1);
+                                } else {
+                                    if (isGreater) {
+                                        return Integer.parseInt(p.getPrice()) > lis.get(0);
+                                    }
+                                    return Integer.parseInt(p.getPrice()) < lis.get(0);
+                                }
+                            })
+                            .toList();
+                }
+                case "acreage" -> {
+                    while (m.find()) {
+                        lis.add(Integer.parseInt(m.group()));
+                    }
+                    postRooms = postRooms.stream()
+                            .filter(p -> {
+                                if (lis.size() == 2) {
+                                    return Integer.parseInt(p.getAcreage()) >= lis.get(0) && Integer.parseInt(
+                                            p.getAcreage()) <= lis.get(1);
+                                } else {
+                                    if (isGreater) {
+                                        return Integer.parseInt(p.getAcreage()) > lis.get(0);
+                                    }
+                                    return Integer.parseInt(p.getAcreage()) < lis.get(0);
+                                }
+                            })
+                            .toList();
+                }
             }
-            postRooms = postRooms.stream()
-                    .filter(p -> {
-                        if (lis.size() == 2) {
-                            return Integer.parseInt(p.getPrice()) >= lis.get(0) && Integer.parseInt(
-                                    p.getPrice()) <= lis.get(1);
-                        } else {
-                            if (isGreater) {
-                                return Integer.parseInt(p.getPrice()) > lis.get(0);
-                            }
-                            return Integer.parseInt(p.getPrice()) < lis.get(0);
-                        }
-                    })
-                    .toList();
         }
+
         return postRooms;
     }
 
