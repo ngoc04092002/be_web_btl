@@ -1,18 +1,24 @@
 package ttcs.btl.controller.filterRequest;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ttcs.btl.service.auth.TokenProvider;
 
 import java.io.IOException;
 import java.util.Enumeration;
 
 @Component
+@RequiredArgsConstructor
 public class AdminFilter extends OncePerRequestFilter {
+    private final TokenProvider tokenProvider;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
@@ -23,10 +29,16 @@ public class AdminFilter extends OncePerRequestFilter {
 
         if (headerNames != null) {
             String token = request.getHeader("access-token");
-            String location = request.getLocalName();
-            String pathName = request.getHeader("pathname");
+            String pathName = request.getHeader("Path-Name");
+            if (StringUtils.isNotBlank(token)) {
+                Claims claims = tokenProvider.decodeJwt(token);
+                String role = (String) claims.get("roleCode");
 
-            System.out.println("Token==>" + token + "-" + location + "-" + pathName);
+                System.out.println("role==>" + role);
+            }
+
+
+            System.out.println("Token==>" + token + "-" + pathName);
         }
 //        if (StringUtils.isNotBlank(token)) {
 

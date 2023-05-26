@@ -26,7 +26,6 @@ public class TokenProvider {
                     .build()
                     .parseClaimsJws(token);
             Date expirationDate = claimsJws.getBody().getExpiration();
-            Date currentTime = new Date();
             return !expirationDate.before(new Date());
         }catch (MalformedJwtException sie){
             System.out.println("MalformedJwtException: "+sie);
