@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface IClientService {
 
-    List<ClientEntity> getAllCLients();
+    List<ClientEntity> getAllClients();
 
     ClientResponse saveClient(ClientEntity clientEntity);
 
     String updatePassword(PasswordRequest passwordRequest);
 
-    String deleteClient(Long id);
+    Boolean deleteClient(Long id);
 
     ClientResponse updateClient(UpdateClientRequest updateClientRequest, String oldEmail);
 }
