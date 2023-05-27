@@ -22,7 +22,6 @@ import ttcs.btl.repository.error.ValidateException;
 import ttcs.btl.service.auth.IAuthService;
 import ttcs.btl.service.auth.TokenProvider;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,7 +45,7 @@ public class AuthController {
     @GetMapping("get-user-info")
     public AuthResponse getUserInfo(@RequestParam String access) {
         final var isAccess = tokenProvider.validateToken(access);
-        if(!isAccess){
+        if (!isAccess) {
             throw new ArgumentException("Hết phiên đăng nhập");
         }
         Claims claims = tokenProvider.decodeJwt(access);
@@ -54,7 +53,7 @@ public class AuthController {
         final var user = iAuthService.fetchUser(email);
 
         if (user == null) {
-            throw new ResourceNotFoundException("Email "+email);
+            throw new ResourceNotFoundException("Email " + email);
         }
         return new AuthResponse(user, access);
     }
@@ -66,10 +65,12 @@ public class AuthController {
             Pattern patternPassword = Pattern.compile(REGEX_PASSWORD, Pattern.CASE_INSENSITIVE);
             Matcher matcherEmail = patternEmail.matcher(clientEntity.getEmail());
             Matcher matcherPassword = patternPassword.matcher(clientEntity.getPassword());
-            if(!matcherEmail.matches()){
+            if (!matcherEmail.matches() || clientEntity.getRole()
+                    .toLowerCase()
+                    .equals("admin")) {
                 throw new ValidateException("Email không hợp lệ!");
             }
-            if(!matcherPassword.matches()){
+            if (!matcherPassword.matches()) {
                 throw new ValidateException("Password cần có ký tự đặc biệt, chữ,số!");
             }
             String encodedPassword = passwordEncoder.encode(clientEntity.getPassword());
@@ -95,14 +96,14 @@ public class AuthController {
         final var user = iAuthService.fetchUser(email);
 
         if (user == null) {
-            throw new ResourceNotFoundException("Email "+email);
+            throw new ResourceNotFoundException("Email " + email);
         }
 
         boolean isMatcher = passwordEncoder.matches(password, user.getPassword());
         if (!isMatcher) {
-            throw new ResourceNotFoundException("Email "+email);
+            throw new ResourceNotFoundException("Email " + email);
         } else {
-            final var token = tokenProvider.createJwtToken(email, "user");
+            final var token = tokenProvider.createJwtToken(email, user.getRole());
             addTokenCookie(response, tokenCookieName, token);
             return new AuthResponse(user, token);
         }
@@ -117,7 +118,7 @@ public class AuthController {
         addTokenCookie(response, tokenCookieName, token);
         if (user == null) {
             String encodedPassword = passwordEncoder.encode(defaultPasswordSignInWithSocial);
-            ClientEntity clientEntity = new ClientEntity(authRequestSocial,encodedPassword);
+            ClientEntity clientEntity = new ClientEntity(authRequestSocial, encodedPassword);
             UserResponse userResponse = new UserResponse(clientEntity, encodedPassword);
             iAuthService.saveUser(userResponse);
             return new AuthResponse(clientEntity, token);
@@ -125,14 +126,6 @@ public class AuthController {
 
         return new AuthResponse(user, token);
     }
-
-    @GetMapping("refresh-cookie")
-    public String refreshCookie(@RequestParam String token) {
-        final var isAccess = tokenProvider.validateToken(token);
-        if(isAccess) return "yes";
-        return "no";
-    }
-
 
     private void addTokenCookie(HttpServletResponse response, final String cookieName, final String token) {
         ResponseCookie cookie = ResponseCookie.from(cookieName, token)
