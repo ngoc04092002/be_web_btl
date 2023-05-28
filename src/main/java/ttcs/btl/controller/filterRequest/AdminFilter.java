@@ -30,26 +30,26 @@ public class AdminFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         // Kiểm tra quyền admin ở đây
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        Cookie[] cookies = httpRequest.getCookies();
-//        if (tokenCookieName != null && cookies != null) {
-//            String pathName = httpRequest.getParameter("pathname");
-//
-//            final var token = getJwtTokenFromCookie(cookies);
-//            System.out.println("pathName==>"+pathName+"-"+token);
-//            boolean adminPath = pathName != null ? pathName.contains("admin") : true;
-//            if (adminPath) {
-//                if (StringUtils.isBlank(token)) {
-//                    throw new ArgumentException("Bạn không có quyền truy cập.");
-//                }
-//                Claims claims = tokenProvider.decodeJwt(token);
-//                String role = (String) claims.get("roleCode");
-//
-//                if (!role.equals("admin")) {
-//                    throw new ArgumentException("Bạn không có quyền truy cập.");
-//                }
-//            }
-//        }
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        Cookie[] cookies = httpRequest.getCookies();
+        if (tokenCookieName != null && cookies != null) {
+            String pathName = httpRequest.getParameter("pathname");
+
+            final var token = getJwtTokenFromCookie(cookies);
+            System.out.println("pathName==>"+pathName+"-"+token);
+            boolean adminPath = pathName != null ? pathName.contains("admin") : true;
+            if (adminPath) {
+                if (StringUtils.isBlank(token)) {
+                    throw new ArgumentException("Bạn không có quyền truy cập.");
+                }
+                Claims claims = tokenProvider.decodeJwt(token);
+                String role = (String) claims.get("roleCode");
+
+                if (!role.equals("admin")) {
+                    throw new ArgumentException("Bạn không có quyền truy cập.");
+                }
+            }
+        }
 
         chain.doFilter(request, response);
     }

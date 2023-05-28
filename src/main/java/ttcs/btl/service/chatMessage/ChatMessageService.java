@@ -8,6 +8,7 @@ import ttcs.btl.model.chatMessage.SeemModal;
 import ttcs.btl.repository.chatMessage.IChatMessageRepo;
 import ttcs.btl.repository.chatMessage.ISeemMessageRepo;
 import ttcs.btl.repository.clients.IClientRepo;
+import ttcs.btl.repository.error.ArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,18 @@ public class ChatMessageService implements IChatMessageService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public ChatMessageModal deleteChatMessage(ChatMessageModal chatMessageModal) {
+        try {
+            iChatMessageRepo.deleteById(chatMessageModal.getId());
+            return chatMessageModal;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new ArgumentException("");
+        }
+
     }
 
 }

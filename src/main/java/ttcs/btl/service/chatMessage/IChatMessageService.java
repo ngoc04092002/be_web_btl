@@ -20,4 +20,6 @@ public interface IChatMessageService {
 
     Boolean checkMissMessage(String userId);
 
+    ChatMessageModal deleteChatMessage(ChatMessageModal chatMessageModal);
+
 }
