@@ -37,7 +37,7 @@ public class AdminFilter extends GenericFilterBean {
 
             final var token = getJwtTokenFromCookie(cookies);
             System.out.println("pathName==>"+pathName+"-"+token);
-            boolean adminPath = pathName != null ? pathName.contains("admin") : true;
+            boolean adminPath = pathName != null ? pathName.contains("admin") : false;
             if (adminPath) {
                 if (StringUtils.isBlank(token)) {
                     throw new ArgumentException("Bạn không có quyền truy cập.");

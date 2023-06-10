@@ -1,7 +1,7 @@
 -- Dùng để loại bỏ foreign key khi muốn xóa dữ liệu
 -- muốn xóa hay update pải dùng hàm này set về 0 ms xóa hay update dc
 -- 0,1
-# SET FOREIGN_KEY_CHECKS=1;
+SET FOREIGN_KEY_CHECKS=1;
 
 -- NEWS
 insert into news (img, title, des, poster_name, client_entity_id)
