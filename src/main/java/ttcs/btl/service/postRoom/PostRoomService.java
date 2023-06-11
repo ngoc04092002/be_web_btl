@@ -62,6 +62,10 @@ public class PostRoomService implements IPostRoomService {
                     .toList();
         }
 
+        postRooms = postRooms.stream()
+                .filter(p -> p.getStatus())
+                .toList();
+
 
         return postRooms;
     }
