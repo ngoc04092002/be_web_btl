@@ -199,19 +199,7 @@ public class PostRoomService implements IPostRoomService {
     public PostRoomEntity updatePostRoom(PostRoomEntity postRoomEntity) {
         final var postRoom = iPostRoomRepo.getById(postRoomEntity.getId());
         postRoom.setStatus(postRoomEntity.getStatus());
-        postRoom.setSale(postRoomEntity.getSale());
-        postRoom.setBedRoom(postRoomEntity.getBedRoom());
-        postRoom.setClientEntityPostRoom(postRoomEntity.getClientEntityPostRoom());
-        postRoom.setRoomType(postRoomEntity.getRoomType());
-        postRoom.setAcreage(postRoomEntity.getAcreage());
-        postRoom.setAddress(postRoomEntity.getAddress());
-        postRoom.setBathroom(postRoomEntity.getBathroom());
-        postRoom.setDes(postRoomEntity.getDes());
-        postRoom.setLimitNumberPeople(postRoomEntity.getLimitNumberPeople());
-        postRoom.setPhone(postRoomEntity.getPhone());
-        postRoom.setPrice(postRoomEntity.getPrice());
-        postRoom.setSrc(postRoomEntity.getSrc());
-        postRoom.setTitle(postRoomEntity.getTitle());
+
 
         return iPostRoomRepo.save(postRoom);
     }
