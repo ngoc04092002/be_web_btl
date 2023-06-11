@@ -68,7 +68,7 @@ public class ClientEntity implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @Column(name = "avatar", nullable = false, columnDefinition = "varchar(225) default ''")
+    @Column(name = "avatar", nullable = false, columnDefinition = "text default ''")
     private String avatar;
     @Column(name = "sdt", nullable = false, columnDefinition = "varchar(225) default ''")
     private String sdt;
