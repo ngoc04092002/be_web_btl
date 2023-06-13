@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     @PutMapping("update-client-info")
-    public ClientResponse updatePassword(@RequestBody @Valid UpdateClientRequest updateClientRequest,
+    public ClientResponse updateUser(@RequestBody @Valid UpdateClientRequest updateClientRequest,
             @RequestParam String oldEmail) {
         return iClientService.updateClient(updateClientRequest, oldEmail);
     }
