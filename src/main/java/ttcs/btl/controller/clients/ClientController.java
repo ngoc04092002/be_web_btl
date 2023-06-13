@@ -19,7 +19,7 @@ public class ClientController {
     private final IClientService iClientService;
 
     @GetMapping("getAll-clients")
-    public List<ClientResponse> getAllClient() {
+    public List<ClientResponse> getAllUser() {
         List<ClientEntity> allClient  = iClientService.getAllClients();
 
         return allClient .stream()
@@ -44,7 +44,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/delete-client/{id}")
-    public Boolean deleteClient(@PathVariable("id") Long id) {
+    public Boolean deleteUser(@PathVariable("id") Long id) {
         return iClientService.deleteClient(id);
     }
 
