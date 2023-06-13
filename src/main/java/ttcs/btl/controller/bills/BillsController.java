@@ -47,7 +47,7 @@ public class BillsController {
     }
 
     @DeleteMapping("delete-bill/{id}")
-    public Boolean saveBill(@PathVariable Long id) {
+    public Boolean deleteBill(@PathVariable Long id) {
         return iBillService.deleteBill(id);
     }
 }
