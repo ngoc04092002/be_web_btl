@@ -43,7 +43,7 @@ public class ForgotPassword {
     }
 
     @PostMapping("delete-forgotpass-ids")
-    public Boolean deleteFeedbackIds(@RequestBody List<Long> ids){
+    public Boolean deleteForgotPassWordIds(@RequestBody List<Long> ids){
         try{
             emailService.deleteUserEmailWithIds(ids);
             return true;
